@@ -23,11 +23,11 @@ public class CartController {
     public List<BookDetail> buyBooks(@RequestBody List<Integer> list)throws CustomerException {
         return cartService.buyBooksinCart(list);
     }
-    @PostMapping("cart/book/quantity/plus/{bookId}")
+    @PatchMapping("cart/book/quantity/plus/{bookId}")
     public Cart increasebookQuantity(@PathVariable Integer bookId){
         return this.cartService.increaseQuantity(bookId);
     }
-    @PostMapping("cart/book/quantity/minus/{bookId}")
+    @PatchMapping("cart/book/quantity/minus/{bookId}")
     public Cart decreasebookQuantity(@PathVariable Integer bookId){
         return this.cartService.decreaseQuantity(bookId);
     }
