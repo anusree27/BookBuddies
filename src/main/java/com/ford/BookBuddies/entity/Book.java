@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Book {
@@ -77,5 +78,12 @@ public class Book {
 
     public void setReviewList(List<Review> reviewList) {
         this.reviewList = reviewList;
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book product = (Book) o;
+        return Objects.equals(bookId, product.bookId);
     }
 }

@@ -19,7 +19,8 @@ public interface CustomerService {
     //get best-selling books
     Customer createCustomerAccount(Customer newCustomer) throws CustomerException;
 
-    Cart addProductToCart(Integer userId, String bookName, Integer quantity);
+//    Cart addProductToCart(Integer userId, String bookName, Integer quantity);
+//    Cart deleteProductFromCart(Integer userId,String bookName);
     Cart getCart(Integer id) throws CustomerException;
     Customer login(String email, String password)throws CustomerException;
    void setCustomerLoginId(Integer user_id);

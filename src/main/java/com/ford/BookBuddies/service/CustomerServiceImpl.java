@@ -7,12 +7,13 @@ import com.ford.BookBuddies.dao.CustomerRepository;
 import com.ford.BookBuddies.entity.*;
 //import com.training.bookbuddies.entity.*;
 import com.ford.BookBuddies.exception.CustomerException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@Transactional
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
@@ -71,20 +72,33 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
 
-    @Override
-    public Cart addProductToCart(Integer userId, String bookName, Integer quantity) {
-        Optional<Customer> customerOptional = this.customerRepository.findById(userId);
-        Optional<Book> bookOptional = this.bookRepository.findByBookTitle(bookName);
-        Customer customer = customerOptional.get();
-        Book book = bookOptional.get();
-        BookDetail bookDetail = new BookDetail(quantity,book);
-        System.out.println("BookDetail:"+quantity+" :"+bookDetail);
-        customer.getCart().getBooksDetails().add(bookDetail);
-        this.bookDetailRepository.save(bookDetail);
-        this.cartRepository.save(customer.getCart());
-        this.customerRepository.save(customer);
-        return customer.getCart();
-}
+//    @Override
+//    public Cart addProductToCart(Integer userId, String bookName, Integer quantity) {
+//        Optional<Customer> customerOptional = this.customerRepository.findById(userId);
+//        Optional<Book> bookOptional = this.bookRepository.findByBookTitle(bookName);
+//        Customer customer = customerOptional.get();
+//        Book book = bookOptional.get();
+//        BookDetail bookDetail = new BookDetail(quantity,book);
+//        customer.getCart().getBooksDetails().add(bookDetail);
+//        this.bookDetailRepository.save(bookDetail);
+//        this.cartRepository.save(customer.getCart());
+//        return customer.getCart();
+//}
+
+//    @Override
+//    public Cart deleteProductFromCart(Integer userId, String bookName) {
+//        Optional<Customer> customerOptional = this.customerRepository.findById(userId);
+//        Optional<Book> bookOptional = this.bookRepository.findByBookTitle(bookName);
+//        Customer customer = customerOptional.get();
+//        Book book = bookOptional.get();
+//        Optional<BookDetail> bookDetailOptional=this.bookDetailRepository.findByBook(book);
+//        customer.getCart().getBooksDetails().remove(bookDetailOptional.get());
+////        this.bookDetailRepository.deleteByBook(book);
+//        this.cartRepository.save(customer.getCart());
+//        return customer.getCart();
+//    }
+
+
     @Override
     public Cart getCart(Integer id) throws CustomerException{
         if(id==null) throw new CustomerException("User not logged in");

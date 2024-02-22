@@ -73,4 +73,8 @@ public class BookOrders {
         this.bookList = bookList;
         this.payment = payment;
     }
+
+    public BookOrders(List<BookDetail> bookList) {
+        this.bookList = bookList;
+    }
 }

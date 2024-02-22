@@ -8,11 +8,12 @@ import com.ford.BookBuddies.entity.Book;
 import com.ford.BookBuddies.entity.BookCategory;
 import com.ford.BookBuddies.entity.Cart;
 import com.ford.BookBuddies.entity.Customer;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@Transactional
 @RestController
 public class UserAccountController {
     private Integer userId=null;
@@ -33,18 +34,14 @@ public class UserAccountController {
         }
         return user;
     }
-
-
-    @PostMapping("customer/cart")
-    public Cart addProductsToCart(@RequestBody CustomerCartDto customerCartDto) {
-        return this.customerService.addProductToCart(userId, customerCartDto.getBookName(),customerCartDto.getQuantity());
+    @GetMapping("customer/cart")
+    public Cart viewCart() throws CustomerException{
+        return this.customerService.getCart(userId);
     }
-
-
-
     @GetMapping("Books/Category/{category}")
     public List<Book> getBooksByCategory(@PathVariable("category") BookCategory bookCategory) {
         return this.customerService.getBooksByCategory(bookCategory);
     }
+
 }
 

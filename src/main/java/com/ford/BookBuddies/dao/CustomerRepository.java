@@ -1,5 +1,7 @@
 package com.ford.BookBuddies.dao;
 
+import com.ford.BookBuddies.entity.Book;
+import com.ford.BookBuddies.entity.BookDetail;
 import com.ford.BookBuddies.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -10,4 +12,5 @@ import java.util.Optional;
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     Optional<Customer> findByUserName(String userName);
     Optional<Customer> findByEmail(String email);
+
 }
