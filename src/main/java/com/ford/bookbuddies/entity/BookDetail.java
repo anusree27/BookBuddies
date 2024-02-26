@@ -11,25 +11,22 @@ public class BookDetail {
     @GeneratedValue
     private Integer id;
     private Integer quantity;
-
     @OneToOne
     private Book book;
-
     public BookDetail() {
     }
 
-    public BookDetail(Integer id, Integer quantity, Book book) {
-        this.id = id;
-        this.quantity = quantity;
-        this.book = book;
-    }
+    //Constructors
+
     public BookDetail(Integer quantity, Book book) {
         this.quantity = quantity;
         this.book = book;
     }
 
-    public BookDetail(Book book, Integer quantity) {
-    }
+
+
+
+    //getters and setters
 
     public Integer getId() {
         return id;

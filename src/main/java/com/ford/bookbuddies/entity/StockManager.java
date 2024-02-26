@@ -12,6 +12,9 @@ public class StockManager {
     private String name;
     private String password;
 
+
+    //Constructors
+
     public StockManager() {
     }
 
@@ -20,6 +23,9 @@ public class StockManager {
         this.name = name;
         this.password = password;
     }
+
+    //getters and setters
+
 
     public Integer getAdminId() {
         return adminId;
