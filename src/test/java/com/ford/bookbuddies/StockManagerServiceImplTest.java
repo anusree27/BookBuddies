@@ -509,17 +509,17 @@ public class StockManagerServiceImplTest {
 
     @Test
     public void viewBooksCountByNameTest() throws StockManagerException, BookException {
-        StockManager stockManager = new StockManager(8080, "viewer", "viewer");
+        StockManager stockManager = new StockManager(1002, "house", "house");
         stockManager = this.stockManagerRepository.save(stockManager);
         stockManager = stockManagerService.login(stockManager.getName(), stockManager.getPassword());
-        Book book = new Book("redbook", "red", 200.0, FICTION);
+        Book book = new Book("black", "black", 200.0, FICTION);
         Integer quantity = 20;
         BookStock bookStock = new BookStock(book, quantity);
         bookStock = this.stockManagerService.addNewBooks(stockManager.getAdminId(),bookStock);
         bookStock = this.bookStockRepository.save(bookStock);
         Integer count = null;
         try {
-            count = this.stockManagerService.viewBooksCountByName(stockManager.getAdminId(), "redbook");
+            count = this.stockManagerService.viewBooksCountByName(stockManager.getAdminId(), "black");
             Assertions.assertEquals(count, quantity);
         }
         catch (StockManagerException e) {
