@@ -29,7 +29,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private BookDetailRepository bookDetailRepository;
 
-    static Integer loginId=null;
+
     @Override
     public Customer createCustomerAccount(Customer newCustomer) throws CustomerException {
         if (newCustomer == null) {
@@ -55,60 +55,30 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer login(String email, String password)throws CustomerException{
         Optional<Customer> opt=this.customerRepository.findByEmail(email);
-        if(opt.isEmpty()) throw new CustomerException("Email is not registered");
+        if(opt.isEmpty()) throw new CustomerException("User Email is not registered");
         Customer found=opt.get();
         if(!password.equals(found.getPassword())) throw new CustomerException("Invalid Password!");
         return found;
     }
 
-    @Override
-    public void setCustomerLoginId(Integer user_id) {
-        loginId=user_id;
-    }
-
-    @Override
-    public Integer getCustomerLoginId() {
-        return loginId;
-    }
-
-
 //    @Override
-//    public Cart addProductToCart(Integer userId, String bookName, Integer quantity) {
-//        Optional<Customer> customerOptional = this.customerRepository.findById(userId);
-//        Optional<Book> bookOptional = this.bookRepository.findByBookTitle(bookName);
-//        Customer customer = customerOptional.get();
-//        Book book = bookOptional.get();
-//        BookDetail bookDetail = new BookDetail(quantity,book);
-//        customer.getCart().getBooksDetails().add(bookDetail);
-//        this.bookDetailRepository.save(bookDetail);
-//        this.cartRepository.save(customer.getCart());
-//        return customer.getCart();
-//}
-
-//    @Override
-//    public Cart deleteProductFromCart(Integer userId, String bookName) {
-//        Optional<Customer> customerOptional = this.customerRepository.findById(userId);
-//        Optional<Book> bookOptional = this.bookRepository.findByBookTitle(bookName);
-//        Customer customer = customerOptional.get();
-//        Book book = bookOptional.get();
-//        Optional<BookDetail> bookDetailOptional=this.bookDetailRepository.findByBook(book);
-//        customer.getCart().getBooksDetails().remove(bookDetailOptional.get());
-////        this.bookDetailRepository.deleteByBook(book);
-//        this.cartRepository.save(customer.getCart());
-//        return customer.getCart();
+//    public void setCustomerLoginId(Integer user_id) {
+//        loginId=user_id;
 //    }
-
+//
+//    @Override
+//    public Integer getCustomerLoginId() {
+//        return loginId;
+//    }
 
     @Override
     public Cart getCart(Integer id) throws CustomerException{
-        if(id==null) throw new CustomerException("User not logged in");
         Optional<Customer> users=this.customerRepository.findById(id);
+        if(users.isEmpty()) throw new CustomerException("User is not registered");
         return users.get().getCart();
     }
     @Override
     public List<Book> getBooksByCategory(BookCategory category) {
         return this.bookRepository.findAllByBookCategory(category);
     }
-
-
 }

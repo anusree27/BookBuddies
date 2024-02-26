@@ -3,7 +3,6 @@ package com.ford.BookBuddies.controller;
 import com.ford.BookBuddies.dto.Logindto;
 import com.ford.BookBuddies.exception.CustomerException;
 import com.ford.BookBuddies.service.CustomerService;
-import com.ford.BookBuddies.dto.CustomerCartDto;
 import com.ford.BookBuddies.entity.Book;
 import com.ford.BookBuddies.entity.BookCategory;
 import com.ford.BookBuddies.entity.Cart;
@@ -16,7 +15,6 @@ import java.util.List;
 @Transactional
 @RestController
 public class UserAccountController {
-    private Integer userId=null;
     @Autowired
     private CustomerService customerService;
 
@@ -27,15 +25,13 @@ public class UserAccountController {
     @PostMapping("useraccount/login")
     public Customer userAccountLogin(@RequestBody Logindto logindto) throws CustomerException{
         Customer user=null;
+        if(logindto==null || logindto.getEmail()==null || logindto.getPassword()==null) throw new CustomerException("Login details not entered!");
         user=this.customerService.login(logindto.getEmail(),logindto.getPassword());
-        if(user!=null){
-            userId=user.getId();
-            customerService.setCustomerLoginId(userId);
-        }
         return user;
     }
-    @GetMapping("customer/cart")
-    public Cart viewCart() throws CustomerException{
+    @GetMapping("customer/cart/{userId}")
+    public Cart viewCart(@PathVariable Integer userId) throws CustomerException{
+        if(userId==null) throw new CustomerException("User not logged in");
         return this.customerService.getCart(userId);
     }
     @GetMapping("Books/Category/{category}")

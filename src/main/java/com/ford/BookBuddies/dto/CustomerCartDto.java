@@ -1,15 +1,25 @@
 package com.ford.BookBuddies.dto;
 
 public class CustomerCartDto {
+    private Integer userId;
     private String bookName;
     private Integer quantity;
 
     public CustomerCartDto() {
     }
 
-    public CustomerCartDto(String bookName, Integer quantity) {
+    public CustomerCartDto(Integer userId,String bookName, Integer quantity) {
         this.bookName = bookName;
         this.quantity = quantity;
+        this.userId=userId;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getBookName() {
