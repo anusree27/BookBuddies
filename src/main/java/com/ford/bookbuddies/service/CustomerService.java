@@ -4,6 +4,8 @@ import com.ford.bookbuddies.entity.Book;
 import com.ford.bookbuddies.entity.BookCategory;
 import com.ford.bookbuddies.entity.Cart;
 import com.ford.bookbuddies.entity.Customer;
+import com.ford.bookbuddies.exception.BookException;
+import com.ford.bookbuddies.exception.CartException;
 import com.ford.bookbuddies.exception.CustomerException;
 
 import java.util.List;
@@ -19,7 +21,7 @@ public interface CustomerService {
     //get best-selling books
     Customer createCustomerAccount(Customer newCustomer) throws CustomerException;
 
-    Cart addProductToCart(Integer userId, String bookName, Integer quantity);
+    Cart addProductToCart(Integer userId, String bookName, Integer quantity) throws CustomerException, BookException, CartException;
     Cart getCart(Integer id) throws CustomerException;
     Customer login(String email, String password)throws CustomerException;
    void setCustomerLoginId(Integer user_id);

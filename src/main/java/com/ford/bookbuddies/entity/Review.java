@@ -12,6 +12,10 @@ public class Review {
     private String review;
     private String userEmail;
 
+
+    //Constructors
+
+
     public Review(Integer reviewId, String review, String userEmail) {
         this.reviewId = reviewId;
         this.review = review;
@@ -21,6 +25,9 @@ public class Review {
     public Review() {
 
     }
+
+
+    //getters and setters
 
     public Integer getReviewId() {
         return reviewId;

@@ -7,6 +7,7 @@ import com.ford.bookbuddies.entity.BookDetail;
 import com.ford.bookbuddies.entity.BookOrders;
 import com.ford.bookbuddies.entity.Cart;
 import com.ford.bookbuddies.entity.Customer;
+import com.ford.bookbuddies.exception.CartException;
 import com.ford.bookbuddies.exception.CustomerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,18 +29,21 @@ public class CartServiceImpl implements CartService{
     @Autowired
     private BookOrderRepository bookOrderRepository;
     @Override
-    public List<BookDetail> buyBooks(List<Integer>list)throws CustomerException {
+    public List<BookDetail> buyBooks(List<Integer>list) throws CustomerException, CartException {
+        if (list.isEmpty()) {
+            throw new CartException("List cannot be empty");
+        }
         Integer loginId = customerService.getCustomerLoginId();
-        Cart userCart=customerService.getCart(loginId);
-        List<BookDetail> orderList=new ArrayList<>();
+        Cart userCart = customerService.getCart(loginId);
+        List<BookDetail> orderList = new ArrayList<>();
         for(BookDetail bd:userCart.getBooksDetails()){
-            if(bd.getBook()!=null){
+            if(bd.getBook()!= null){
                 if(list.contains(bd.getBook().getBookId())){
                     orderList.add(bd);
                 }}
         }
-        Optional<Customer> customer=this.customerRepository.findById(loginId);
-        BookOrders bookOrders=new BookOrders();
+        Optional<Customer> customer = this.customerRepository.findById(loginId);
+        BookOrders bookOrders = new BookOrders();
         bookOrders.setBookList(orderList);
         customer.get().getOrderList().add(bookOrders);
         this.bookOrderRepository.save(bookOrders);
@@ -49,7 +53,7 @@ public class CartServiceImpl implements CartService{
 
     @Override
     public void subsribeBooks() {
-
+        return;
     }
 
     @Override

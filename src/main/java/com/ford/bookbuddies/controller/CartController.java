@@ -1,6 +1,7 @@
 package com.ford.bookbuddies.controller;
 
 import com.ford.bookbuddies.entity.BookDetail;
+import com.ford.bookbuddies.exception.CartException;
 import com.ford.bookbuddies.exception.CustomerException;
 import com.ford.bookbuddies.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class CartController {
     private CartService cartService;
 
     @PostMapping("cart/buy")
-    public List<BookDetail> buyBooks(@RequestBody List<Integer> list)throws CustomerException {
+    public List<BookDetail> buyBooks(@RequestBody List<Integer> list) throws CustomerException, CartException {
         return cartService.buyBooks(list);
     }
 }

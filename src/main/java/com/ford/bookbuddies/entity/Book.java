@@ -18,18 +18,22 @@ public class Book {
     @OneToMany
     private List<Review> reviewList=new ArrayList<>();
 
+    //Constructors
+
     public Book() {
     }
 
-
-
     public Book( String bookTitle, String bookAuthor, Double price, BookCategory bookCategory) {
-
         this.bookTitle = bookTitle;
         this.bookAuthor = bookAuthor;
         this.price = price;
         this.bookCategory = bookCategory;
     }
+
+
+
+
+    //getters and setters
 
     public Integer getBookId() {
         return bookId;

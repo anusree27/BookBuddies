@@ -14,10 +14,20 @@ public class BookStock {
     private Book book;
     private Integer stockQuantity;
 
+
+    //Constructors
+
+
     public BookStock(Book book, Integer stockQuantity) {
         this.book = book;
         this.stockQuantity = stockQuantity;
     }
+
+    public BookStock() {
+    }
+
+
+    //getters and setters
 
     public Integer getBookStockId() {
         return bookStockId;
@@ -43,6 +53,4 @@ public class BookStock {
         this.stockQuantity = stockQuantity;
     }
 
-    public BookStock() {
-    }
 }

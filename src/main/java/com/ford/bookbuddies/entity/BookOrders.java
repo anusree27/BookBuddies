@@ -11,20 +11,29 @@ public class BookOrders {
     @GeneratedValue
     private Integer orderId;
     private Integer totalBookCount;
-
     private String address;
-
     private OrderStatus orderStatus;
-
     @OneToMany
     private List<BookDetail> bookList = new ArrayList<>();
-
     @OneToOne
     private Payment payment;
+
+    //Constructors
+
 
     public BookOrders() {
 
     }
+    public BookOrders(Integer totalBookCount, String address, OrderStatus orderStatus, List<BookDetail> bookList, Payment payment) {
+        this.totalBookCount = totalBookCount;
+        this.address = address;
+        this.orderStatus = orderStatus;
+        this.bookList = bookList;
+        this.payment = payment;
+    }
+
+
+    //getters and setters
 
     public Integer getTotalBookCount() {
         return totalBookCount;
@@ -66,11 +75,4 @@ public class BookOrders {
         this.payment = payment;
     }
 
-    public BookOrders(Integer totalBookCount, String address, OrderStatus orderStatus, List<BookDetail> bookList, Payment payment) {
-        this.totalBookCount = totalBookCount;
-        this.address = address;
-        this.orderStatus = orderStatus;
-        this.bookList = bookList;
-        this.payment = payment;
-    }
 }

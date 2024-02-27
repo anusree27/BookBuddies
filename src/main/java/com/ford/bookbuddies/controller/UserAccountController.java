@@ -1,6 +1,8 @@
 package com.ford.bookbuddies.controller;
 
 import com.ford.bookbuddies.dto.Logindto;
+import com.ford.bookbuddies.exception.BookException;
+import com.ford.bookbuddies.exception.CartException;
 import com.ford.bookbuddies.exception.CustomerException;
 import com.ford.bookbuddies.service.CustomerService;
 import com.ford.bookbuddies.dto.CustomerCartDto;
@@ -36,7 +38,7 @@ public class UserAccountController {
 
 
     @PostMapping("customer/cart")
-    public Cart addProductsToCart(@RequestBody CustomerCartDto customerCartDto) {
+    public Cart addProductsToCart(@RequestBody CustomerCartDto customerCartDto) throws CustomerException, CartException, BookException {
         return this.customerService.addProductToCart(userId, customerCartDto.getBookName(),customerCartDto.getQuantity());
     }
 

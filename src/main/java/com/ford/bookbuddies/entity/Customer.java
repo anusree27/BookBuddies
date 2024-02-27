@@ -20,6 +20,12 @@ public class Customer {
     @OneToMany
     private List<BookOrders> orderList =new ArrayList<>();
 
+    @OneToOne
+    private Cart cart;
+
+
+    //Constructors
+
     public Customer(String name, String email, String password, String userName, Cart cart) {
         this.name = name;
         this.email = email;
@@ -27,6 +33,28 @@ public class Customer {
         this.password = password;
        this.cart = cart;
     }
+
+    public Customer(Integer id, String name, String email, String password, String userName, Cart cart) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.userName = userName;
+        this.password = password;
+        this.cart = cart;
+    }
+
+    public Customer() {
+    }
+
+    public Customer( String name, String email, String userName, String password) {
+        this.userName = userName;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+
+
+    //getters and setters
 
     public Cart getCart() {
         return cart;
@@ -48,23 +76,10 @@ public class Customer {
         this.cart = cart;
     }
 
-    @OneToOne
-    private Cart cart;
-
-
     //userorders?
 //    @OneToMany
 //    private List<BookOrder> BookOrders = new ArrayList<>();
 
-    public Customer() {
-    }
-
-    public Customer( String name, String email, String userName, String password) {
-        this.userName = userName;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-    }
 
     public Integer getId() {
         return id;
@@ -106,12 +121,5 @@ public class Customer {
         this.userName = userName;
     }
 
-//    public List<CustomerOrder> getOrders() {
-//        return customerOrders;
-//    }
-//
-//    public void setOrders(List<CustomerOrder> customerOrders) {
-//        this.customerOrders = customerOrders;
-//    }
 }
 
