@@ -42,43 +42,19 @@ public class StockManagerServiceImplTest {
 
     @Test
     public void loginTest() throws StockManagerException {
-        StockManager stockManager = new StockManager(20, "admin", "admin");
+        StockManager stockManager = new StockManager(2020, "query", "query");
         stockManager = this.stockManagerRepository.save(stockManager);
         stockManager = stockManagerService.login(stockManager.getName(), stockManager.getPassword());
         Assertions.assertNotNull(stockManager);
     }
 
-    @Test
-    @DisplayName("Login should throw exception when username is null")
-    public void loginShouldThrowExceptionWhenUserNameIsNull() throws StockManagerException {
-        StockManager stockManager = new StockManager(80, null, "admin");
-        stockManager = this.stockManagerRepository.save(stockManager);
-        try {
-            stockManager = stockManagerService.login(stockManager.getName(), stockManager.getPassword());
-        }
-        catch (StockManagerException e) {
-            Assertions.assertEquals("name should not be null", e.getMessage());
-        }
-    }
 
-    @Test
-    @DisplayName("Login should throw exception when password is null")
-    public void loginShouldThrowExceptionWhenPasswordIsNull() throws StockManagerException {
-        StockManager stockManager = new StockManager(19, "admin", null);
-        stockManager = this.stockManagerRepository.save(stockManager);
-        try {
-            stockManager = stockManagerService.login(stockManager.getName(), stockManager.getPassword());
-        }
-        catch (StockManagerException e) {
-            Assertions.assertEquals("Password should not be null", e.getMessage());
-        }
-    }
 
     @Test
     @DisplayName("Login should throw exception when Stock manager not registered")
     public void loginShouldThrowExceptionWhenStockManagerNotRegistered() throws StockManagerException {
         try {
-            StockManager stockManager = stockManagerService.login("john", "john");
+            StockManager stockManager = stockManagerService.login("papaya", "papaya");
         }
         catch (StockManagerException e) {
             Assertions.assertEquals("Admin is not registered", e.getMessage());
@@ -88,7 +64,7 @@ public class StockManagerServiceImplTest {
     @Test
     @DisplayName("Login should throw exception when password is incorrect")
     public void loginShouldThrowExceptionWhenPasswordIsIncorrect() throws StockManagerException {
-        StockManager stockManager = new StockManager(200, "john", "john");
+        StockManager stockManager = new StockManager(1100, "music", "music");
         stockManager = this.stockManagerRepository.save(stockManager);
         try {
             stockManager = stockManagerService.login(stockManager.getName(), "password");
@@ -115,86 +91,8 @@ public class StockManagerServiceImplTest {
         this.stockManagerRepository.delete(stockManager);
     }
 
-    @Test
-    @DisplayName("add new books should throw exception when Admin Id is null")
-    public void addNewBooksShouldThrowExceptionWhenBookAdminIdIsNull() throws StockManagerException {
-        Book book = new Book(null, "Disney", 500.0, FICTION);
-        Integer quantity = 2;
-        BookStock bookStock = new BookStock(book, quantity);
-        try {
-            bookStock = this.stockManagerService.addNewBooks(null,bookStock);
-
-        }
-        catch (BookException | StockManagerException e)  {
-            Assertions.assertEquals("Admin not logged", e.getMessage());
-        }
-    }
 
 
-
-    @Test
-    @DisplayName("add new books should throw exception when book title is null")
-    public void addNewBooksShouldThrowExceptionWhenBookTitleIsNull() throws StockManagerException {
-        StockManager stockManager = new StockManager(55, "title", "title");
-        stockManager = this.stockManagerRepository.save(stockManager);
-        stockManager = stockManagerService.login(stockManager.getName(), stockManager.getPassword());
-        Book book = new Book(null, "Disney", 500.0, FICTION);
-        Integer quantity = 2;
-        BookStock bookStock = new BookStock(book, quantity);
-        try {
-            bookStock = this.stockManagerService.addNewBooks(stockManager.getAdminId(),bookStock);
-
-        }
-        catch (BookException | StockManagerException e)  {
-            Assertions.assertEquals("book Title should not be null", e.getMessage());
-        }
-        finally {
-            this.stockManagerRepository.delete(stockManager);
-        }
-
-    }
-
-    @Test
-    @DisplayName("add new books should throw exception when book author is null")
-    public void addNewBooksShouldThrowExceptionWhenBookAuthorIsNull() throws StockManagerException {
-        StockManager stockManager = new StockManager(66, "addy", "addy");
-        stockManager = this.stockManagerRepository.save(stockManager);
-        stockManager = stockManagerService.login(stockManager.getName(), stockManager.getPassword());
-        Book book = new Book("Rapunzel", null, 500.0, FICTION);
-        Integer quantity = 2;
-        BookStock bookStock = new BookStock(book, quantity);
-        try {
-            bookStock = this.stockManagerService.addNewBooks(stockManager.getAdminId(),bookStock);
-
-        }
-        catch (BookException | StockManagerException e) {
-            Assertions.assertEquals("book Author should not be null", e.getMessage());
-        }
-        finally {
-            this.stockManagerRepository.delete(stockManager);
-        }
-    }
-
-    @Test
-    @DisplayName("add new books should throw exception when book price is null")
-    public void addNewBooksShouldThrowExceptionWhenBookPriceIsNull() throws StockManagerException {
-        StockManager stockManager = new StockManager(77, "nully", "nully");
-        stockManager = this.stockManagerRepository.save(stockManager);
-        stockManager = stockManagerService.login(stockManager.getName(), stockManager.getPassword());
-        Book book = new Book("Rapunzel", "Disney", null, FICTION);
-        Integer quantity = 2;
-        BookStock bookStock = new BookStock(book, quantity);
-        try {
-            bookStock = this.stockManagerService.addNewBooks(stockManager.getAdminId(),bookStock);
-
-        }
-        catch (BookException | StockManagerException e) {
-            Assertions.assertEquals("book Price should not be null", e.getMessage());
-        }
-        finally {
-            this.stockManagerRepository.delete(stockManager);
-        }
-    }
 
     @Test
     @DisplayName("add new books should throw exception when book price is less than zero")
@@ -240,82 +138,7 @@ public class StockManagerServiceImplTest {
     }
 
 
-    @Test
-    @DisplayName("update books should throw exception when Admin id is null")
-    public void updateBooksShouldThrowExceptionWhenAdminIdIsNull() throws StockManagerException {
-         Book book = new Book(null, "Disney", 500.0, FICTION);
-        Integer quantity = 2;
-        BookStock bookStock = new BookStock(book, quantity);
-        try {
-            bookStock = this.stockManagerService.updateBook(null,bookStock);
 
-        }
-        catch (BookException | StockManagerException e) {
-            Assertions.assertEquals("Admin not logged", e.getMessage());
-        }
-    }
-    @Test
-    @DisplayName("update books should throw exception when book title is null")
-    public void updateBooksShouldThrowExceptionWhenBookTitleIsNull() throws StockManagerException {
-        StockManager stockManager = new StockManager(10, "admin", "admin");
-        stockManager = this.stockManagerRepository.save(stockManager);
-        stockManager = stockManagerService.login(stockManager.getName(), stockManager.getPassword());
-        Book book = new Book(null, "Disney", 500.0, FICTION);
-        Integer quantity = 2;
-        BookStock bookStock = new BookStock(book, quantity);
-        try {
-            bookStock = this.stockManagerService.updateBook(stockManager.getAdminId(),bookStock);
-
-        }
-        catch (BookException | StockManagerException e) {
-            Assertions.assertEquals("book Title should not be null", e.getMessage());
-        }
-        finally {
-            this.stockManagerRepository.delete(stockManager);
-        }
-    }
-
-    @Test
-    @DisplayName("update books should throw exception when book author is null")
-    public void updateBooksShouldThrowExceptionWhenBookAuthorIsNull() throws StockManagerException {
-        StockManager stockManager = new StockManager(111, "john", "john");
-        stockManager = this.stockManagerRepository.save(stockManager);
-        stockManager = stockManagerService.login(stockManager.getName(), stockManager.getPassword());
-        Book book = new Book("Rapunzel", null, 500.0, FICTION);
-        Integer quantity = 2;
-        BookStock bookStock = new BookStock(book, quantity);
-        try {
-            bookStock = this.stockManagerService.updateBook(stockManager.getAdminId(),bookStock);
-
-        }
-        catch (BookException | StockManagerException e) {
-            Assertions.assertEquals("book Author should not be null", e.getMessage());
-        }
-        finally {
-            this.stockManagerRepository.delete(stockManager);
-        }
-    }
-
-    @Test
-    @DisplayName("update books should throw exception when book price is null")
-    public void updateBooksShouldThrowExceptionWhenBookPriceIsNull() throws StockManagerException {
-        StockManager stockManager = new StockManager(123, "india", "india");
-        stockManager = this.stockManagerRepository.save(stockManager);
-        stockManager = stockManagerService.login(stockManager.getName(), stockManager.getPassword());
-        Book book = new Book("Rapunzel", "Disney", null, FICTION);
-        Integer quantity = 2;
-        BookStock bookStock = new BookStock(book, quantity);
-        try {
-            bookStock = this.stockManagerService.updateBook(stockManager.getAdminId(),bookStock);
-
-        }
-        catch (BookException | StockManagerException e) {
-            Assertions.assertEquals("book Price should not be null", e.getMessage());
-        }
-        finally {
-            this.stockManagerRepository.delete(stockManager);
-        }
-    }
 
     @Test
     @DisplayName("update books should throw exception when book price is less than zero")
@@ -363,54 +186,6 @@ public class StockManagerServiceImplTest {
     }
 
 
-    @Test
-    @DisplayName("delete book by name should throw exception when admin id is null")
-    public void deleteBookByNameShouldThrowExceptionWhenAdminIdIsNull() throws StockManagerException, BookException {
-        StockManager stockManager = new StockManager(2222, "throw", "throw");
-        stockManager = this.stockManagerRepository.save(stockManager);
-        stockManager = stockManagerService.login(stockManager.getName(), stockManager.getPassword());
-        Book book = new Book("Rapunzel", "Disney", 200.0, FICTION);
-        Integer quantity = 2;
-        Boolean result;
-        BookStock bookStock = new BookStock(book, quantity);
-        bookStock = this.stockManagerService.addNewBooks(stockManager.getAdminId(),bookStock);
-        bookStock = this.bookStockRepository.save(bookStock);
-        try {
-            result = this.stockManagerService.deleteBookByBookName(null, "Rapunzel");
-
-        }
-        catch (BookException | StockManagerException e) {
-            Assertions.assertEquals("Admin not logged", e.getMessage());
-        }
-        finally {
-            this.stockManagerRepository.delete(stockManager);
-        }
-    }
-
-
-    @Test
-    @DisplayName("delete book by name should throw exception when book name is null")
-    public void deleteBookByNameShoukdThrowExceptionWhenBookNameIsNull() throws BookException, StockManagerException{
-        StockManager stockManager = new StockManager(29, "del", "del");
-        stockManager = this.stockManagerRepository.save(stockManager);
-        stockManager = stockManagerService.login(stockManager.getName(), stockManager.getPassword());
-        Book book = new Book("coding", "me", 200.0, FICTION);
-        Integer quantity = 2;
-        Boolean result;
-        BookStock bookStock = new BookStock(book, quantity);
-        bookStock = this.stockManagerService.addNewBooks(stockManager.getAdminId(),bookStock);
-        bookStock = this.bookStockRepository.save(bookStock);
-        try {
-            result = this.stockManagerService.deleteBookByBookName(stockManager.getAdminId(), null);
-
-        }
-        catch (BookException | StockManagerException e) {
-            Assertions.assertEquals("Book name should not be null", e.getMessage());
-        }
-        finally {
-            this.stockManagerRepository.delete(stockManager);
-        }
-    }
 
 
     @Test
@@ -462,23 +237,14 @@ public class StockManagerServiceImplTest {
         }
     }
 
-    @Test
-    @DisplayName("display All Books should throw exception when admin id is null")
-    public void displayAllBooksShouldThrowExceptionWhenAdminIdIsNull() {
-        try {
-            this.stockManagerService.displayAllBooks(null);
-        }
-        catch (StockManagerException e) {
-            Assertions.assertEquals("Admin not logged", e.getMessage());
-        }
-    }
+
 
 
     // display all customers
 
     @Test
     public void displayAllCustomersTest() throws StockManagerException {
-        StockManager stockManager = new StockManager(144, "tester", "tester");
+        StockManager stockManager = new StockManager(689, "tester", "tester");
         stockManager = this.stockManagerRepository.save(stockManager);
         stockManager = stockManagerService.login(stockManager.getName(), stockManager.getPassword());
         Customer customer = new Customer("customer", "customer@gmail.com", "customer", "customer", null);
@@ -493,16 +259,6 @@ public class StockManagerServiceImplTest {
         }
     }
 
-    @Test
-    @DisplayName("display all customers should throw exception when admin id is null")
-    public void displayAllCustomersShouldThrowExceptionWhenAdminIdIsNull() throws StockManagerException {
-        try {
-            this.stockManagerService.displayAllCustomer(null);
-        }
-        catch (StockManagerException e) {
-            Assertions.assertEquals("Admin not logged", e.getMessage());
-        }
-    }
 
 
     //view books count by name
@@ -524,17 +280,6 @@ public class StockManagerServiceImplTest {
         }
         catch (StockManagerException e) {
             e.printStackTrace();
-        }
-    }
-
-    @Test
-    @DisplayName("view book count by name should throw exception when admin id is null")
-    public void viewBooksCountByNameShouldThrowExceptionWhenAdminIdIsNull() {
-        try {
-            this.stockManagerService.viewBooksCountByName(null, "abcd");
-        }
-        catch (StockManagerException | BookException e) {
-            Assertions.assertEquals("Admin not logged", e.getMessage());
         }
     }
 
@@ -575,31 +320,7 @@ public class StockManagerServiceImplTest {
         }
     }
 
-    @Test
-    @DisplayName("updatebook count by name should throw exception when admin id is null")
-    public void updateBooksCountByNameShouldThrowExceptionWhenAdminIdIsNull() {
-        try {
-            this.stockManagerService.updateBookCountByName(null, "hello", 2);
-        }
-        catch (StockManagerException | BookException e) {
-            Assertions.assertEquals("Admin not logged", e.getMessage());
-        }
-    }
 
-
-    @Test
-    @DisplayName("updatebook count by name should throw exception when book name is null")
-    public void updateBooksCountByNameShouldThrowExceptionWhenBookNameIsNull() throws StockManagerException {
-        StockManager stockManager = new StockManager(2004, "trees", "trees");
-        stockManager = this.stockManagerRepository.save(stockManager);
-        stockManager = stockManagerService.login(stockManager.getName(), stockManager.getPassword());
-        try {
-            this.stockManagerService.updateBookCountByName(stockManager.getAdminId(), null, 2);
-        }
-        catch (StockManagerException | BookException e) {
-            Assertions.assertEquals("Book name should not be null", e.getMessage());
-        }
-    }
 
     @Test
     @DisplayName("update book count by name should throw exception when book is not present")

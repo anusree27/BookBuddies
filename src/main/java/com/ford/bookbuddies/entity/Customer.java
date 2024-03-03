@@ -9,6 +9,14 @@ import java.util.List;
 @Entity
 public class Customer {
 
+    public Customer(Integer id, String name, String userName, String email, String password) {
+        this.id = id;
+        this.name = name;
+        this.userName = userName;
+        this.email = email;
+        this.password = password;
+    }
+
     @Id
     @GeneratedValue
     private Integer id;

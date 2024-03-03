@@ -7,11 +7,11 @@ import java.util.List;
 
 @Entity
 public class BookOrders {
+
     @Id
     @GeneratedValue
     private Integer orderId;
     private Integer totalBookCount;
-    private String address;
     private OrderStatus orderStatus;
     @OneToMany
     private List<BookDetail> bookList = new ArrayList<>();
@@ -24,9 +24,10 @@ public class BookOrders {
     public BookOrders() {
 
     }
-    public BookOrders(Integer totalBookCount, String address, OrderStatus orderStatus, List<BookDetail> bookList, Payment payment) {
+
+    public BookOrders(Integer orderId, Integer totalBookCount, OrderStatus orderStatus, List<BookDetail> bookList, Payment payment) {
+        this.orderId = orderId;
         this.totalBookCount = totalBookCount;
-        this.address = address;
         this.orderStatus = orderStatus;
         this.bookList = bookList;
         this.payment = payment;
@@ -41,14 +42,6 @@ public class BookOrders {
 
     public void setTotalBookCount(Integer totalBookCount) {
         this.totalBookCount = totalBookCount;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public OrderStatus getOrderStatus() {
@@ -74,5 +67,14 @@ public class BookOrders {
     public void setPayment(Payment payment) {
         this.payment = payment;
     }
+
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
+    }
+
 
 }

@@ -2,17 +2,12 @@ package com.ford.bookbuddies.service;
 
 import com.ford.bookbuddies.entity.BookDetail;
 import com.ford.bookbuddies.entity.Cart;
-import com.ford.bookbuddies.exception.CartException;
-import com.ford.bookbuddies.exception.CustomerException;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public interface CartService {
-    //buy books
-    //subscribe books
-    //
-    List<BookDetail> buyBooks(List<Integer>list) throws CustomerException, CartException;
-    void subsribeBooks();
-    Cart increaseQuantity();
-    Cart decreaseQuantity();
+    List<BookDetail> buyBooksinCart(Integer userId,List<Integer>list) throws Exception;
+    Cart increaseQuantity(Integer userId, Integer bookId)throws Exception;
+    Cart decreaseQuantity(Integer userId, Integer bookId)throws Exception;
 }

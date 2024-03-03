@@ -1,9 +1,8 @@
 package com.ford.bookbuddies.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
+
+import java.util.Objects;
 
 @Entity
 public class BookDetail {
@@ -11,22 +10,24 @@ public class BookDetail {
     @GeneratedValue
     private Integer id;
     private Integer quantity;
-    @OneToOne
+
+    //    @OneToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     private Book book;
+
     public BookDetail() {
     }
 
-    //Constructors
-
+    public BookDetail(Integer id, Integer quantity, Book book) {
+        this.id = id;
+        this.quantity = quantity;
+        this.book = book;
+    }
     public BookDetail(Integer quantity, Book book) {
         this.quantity = quantity;
         this.book = book;
     }
 
-
-
-
-    //getters and setters
 
     public Integer getId() {
         return id;
@@ -59,5 +60,12 @@ public class BookDetail {
                 ", quantity=" + quantity +
                 ", book=" + book +
                 '}';
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BookDetail product = (BookDetail) o;
+        return Objects.equals(id, product.id);
     }
 }

@@ -10,24 +10,18 @@ public class Review {
     @GeneratedValue
     private Integer reviewId;
     private String review;
+    private Integer bookId;
     private String userEmail;
 
+    public Review() {
+    }
 
-    //Constructors
+    public Review( String review, Integer bookId, String userEmail) {
 
-
-    public Review(Integer reviewId, String review, String userEmail) {
-        this.reviewId = reviewId;
         this.review = review;
+        this.bookId = bookId;
         this.userEmail = userEmail;
     }
-
-    public Review() {
-
-    }
-
-
-    //getters and setters
 
     public Integer getReviewId() {
         return reviewId;
@@ -45,6 +39,14 @@ public class Review {
         this.review = review;
     }
 
+    public Integer getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(Integer bookId) {
+        this.bookId = bookId;
+    }
+
     public String getUserEmail() {
         return userEmail;
     }
@@ -52,4 +54,12 @@ public class Review {
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
     }
+
+
+    //Constructors
+
+
+
+
+
 }

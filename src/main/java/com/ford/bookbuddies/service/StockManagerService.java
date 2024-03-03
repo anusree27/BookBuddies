@@ -1,9 +1,9 @@
 package com.ford.bookbuddies.service;
 
-import com.ford.bookbuddies.entity.BookStock;
-import com.ford.bookbuddies.entity.Customer;
-import com.ford.bookbuddies.entity.StockManager;
+import com.ford.bookbuddies.entity.*;
 import com.ford.bookbuddies.exception.BookException;
+import com.ford.bookbuddies.exception.OrderException;
+import com.ford.bookbuddies.exception.PaymentException;
 import com.ford.bookbuddies.exception.StockManagerException;
 
 import java.util.List;
@@ -36,4 +36,6 @@ public interface StockManagerService {
     Integer viewBooksCountByName(Integer adminId,String bookName) throws BookException, StockManagerException;
 
     BookStock updateBookCountByName(Integer adminId,String bookName, Integer quantity) throws BookException, StockManagerException;
+
+    BookOrders updateOrderStatus(Integer orderId, OrderStatus orderStatus) throws OrderException;
 }
