@@ -1,13 +1,16 @@
 package com.ford.bookbuddies.service;
 
-import com.ford.bookbuddies.dao.BookOrderRepository;
-import com.ford.bookbuddies.dao.BookStockRepository;
-import com.ford.bookbuddies.dao.CustomerRepository;
-import com.ford.bookbuddies.dao.PaymentRepository;
+import com.ford.bookbuddies.dao.*;
 import com.ford.bookbuddies.dto.ConfirmedBooksDto;
+import com.ford.bookbuddies.dto.TransactionDetails;
 import com.ford.bookbuddies.entity.*;
 import com.ford.bookbuddies.exception.PaymentException;
+import com.ford.bookbuddies.exception.SubscriptionException;
+import com.razorpay.RazorpayClient;
+import com.razorpay.RazorpayException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -24,18 +27,24 @@ public class PaymentServiceImpl implements PaymentService {
     @Autowired
     private PaymentRepository paymentRepository;
 
+
+    @Autowired
+    private SubscriptionRepository subscriptionRepository;
     @Autowired
     private BookStockRepository bookStockRepository;
+    private final Environment env;
+    private static final String CURRENCY="currency";
+
+    public PaymentServiceImpl(Environment env) {
+        this.env = env;
+    }
+
     public Payment makePayment(Payment payment) throws Exception {
-        if(payment.getTotalCost()==null)
-        {
-            throw new PaymentException("Entered Payment Should not be null");
-        }
         if(confirmedBooksDto.getOrderedBooks()==null)
         {
             throw new PaymentException("Books to Order list should not be null");
         }
-        System.out.println(confirmedBooksDto.getOrderedBooks());
+
         double price=0.0;
         Integer totalQuantity=0;
         for(BookDetail books: confirmedBooksDto.getOrderedBooks())
@@ -81,4 +90,36 @@ public class PaymentServiceImpl implements PaymentService {
         confirmedBooksDto=confirmedBookDto;
 
     }
+
+    public TransactionDetails createTransaction(Integer subscriptionId) throws PaymentException, SubscriptionException, RazorpayException {
+
+        Optional<Subscription> findSubscription=this.subscriptionRepository.findById(subscriptionId);
+        if(findSubscription.isPresent()){
+            JSONObject jsonObject=new JSONObject();
+            jsonObject.put("amount", findSubscription.get().getSubscriptionCost());
+            jsonObject.put(CURRENCY,env.getProperty(CURRENCY));
+
+            RazorpayClient razorpayClient=new RazorpayClient(env.getProperty("razorpay.api.key"), env.getProperty("razorpay.api.secret"));
+            com.razorpay.Order  razorpayOrder =razorpayClient.orders.create(jsonObject);
+            String key=env.getProperty("razorpay.api.key");
+            String transactionId=razorpayOrder.get("id");
+            String currency=razorpayOrder.get(CURRENCY);
+            Integer amount=razorpayOrder.get("amount");
+            if(transactionId != null)
+            {
+                findSubscription.get().setSubscriptionStatus("Subscribed Successfully");
+            }
+            else
+            {
+                throw new PaymentException("Transaction denied");
+            }
+            this.subscriptionRepository.save(findSubscription.get());
+
+
+            return new TransactionDetails(transactionId,currency,amount.doubleValue(),key);
+
+
+        }else throw new SubscriptionException("No Subscription Exist with Id:"+subscriptionId);
+    }
+
 }
