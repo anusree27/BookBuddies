@@ -10,9 +10,9 @@ import java.util.Optional;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
 
-    Optional<Review> findByBookId(Integer bookId);
+//    Optional<Review> findByBookId(Integer bookId);
 
-    Optional<Review> findByCustomerId(Integer customerId);
+//    Optional<Review> findByCustomerId(Integer customerId);
 }
 
 

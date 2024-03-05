@@ -18,12 +18,14 @@ public class Payment {
     public Payment() {
     }
 
-    public Payment(Boolean paymentStatus, Double totalCost, String address, PaymentMode paymentMode) {
-        this.paymentStatus = paymentStatus;
+    public Payment( Double totalCost, String address, PaymentMode paymentMode) {
+
         this.totalCost = totalCost;
         this.address = address;
         this.paymentMode = paymentMode;
     }
+
+
 
     public Integer getPaymentId() {
         return paymentId;
