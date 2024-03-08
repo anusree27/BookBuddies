@@ -16,7 +16,7 @@ import java.util.List;
 import static com.ford.bookbuddies.entity.BookCategory.FICTION;
 
 @SpringBootTest
-public class BookControllerTest {
+class BookControllerTest {
     @Autowired
     private CartRepository cartRepository;
     @Autowired

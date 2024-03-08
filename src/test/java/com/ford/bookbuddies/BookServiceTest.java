@@ -6,7 +6,6 @@ import com.ford.bookbuddies.dao.*;
 import com.ford.bookbuddies.entity.*;
 import com.ford.bookbuddies.service.BookService;
 import com.ford.bookbuddies.service.CustomerService;
-import com.ford.bookbuddies.service.DeleteService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -18,7 +17,7 @@ import java.util.List;
 import static com.ford.bookbuddies.entity.BookCategory.FICTION;
 
 @SpringBootTest
-public class BookServiceTests {
+public class BookServiceTest {
     @Autowired
     private CartRepository cartRepository;
     @Autowired

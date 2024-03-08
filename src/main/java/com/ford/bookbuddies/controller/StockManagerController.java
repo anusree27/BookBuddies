@@ -52,7 +52,7 @@ public class StockManagerController {
     }
 
 
-    @PostMapping("Book")
+    @PostMapping("stockmanager/Book")
     public BookStock addNewBooks(@RequestBody BookStock newBook) throws BookException, StockManagerException {
         if (null == adminId ) {
             throw new StockManagerException("Admin not logged");
@@ -72,7 +72,7 @@ public class StockManagerController {
         return this.stockManagerService.addNewBooks(adminId, newBook);
     }
 
-    @PatchMapping("Book")
+    @PatchMapping("stockmanager/Book")
     public BookStock updateBook(@RequestBody BookStock updateBook) throws BookException, StockManagerException {
         if (null == adminId ) {
             throw new StockManagerException("Admin not logged");
@@ -92,7 +92,7 @@ public class StockManagerController {
         return this.stockManagerService.updateBook(adminId,updateBook);
     }
 
-    @DeleteMapping("book/{name}")
+    @DeleteMapping("stockmanager/book/{name}")
     public Boolean deleteBook(@PathVariable("name") String bookName) throws BookException, StockManagerException {
         if (null == adminId) {
             throw new StockManagerException("Admin not logged");
@@ -103,7 +103,7 @@ public class StockManagerController {
         return this.stockManagerService.deleteBookByBookName(adminId,bookName);
     }
 
-    @GetMapping("books")
+    @GetMapping("stockmanager/books")
     public List<BookStock> getAllBooks() throws StockManagerException {
         if (null == adminId) {
             throw new StockManagerException("Admin not logged");
@@ -111,7 +111,7 @@ public class StockManagerController {
         return this.stockManagerService.displayAllBooks(adminId);
     }
 
-    @GetMapping("users")
+    @GetMapping("stockmanager/users")
     public List<Customer> getAllCustomer() throws StockManagerException {
         if (null == adminId) {
             throw new StockManagerException("Admin not logged");
@@ -119,7 +119,7 @@ public class StockManagerController {
         return this.stockManagerService.displayAllCustomer(adminId);
     }
 
-    @GetMapping("bookcount/{name}")
+    @GetMapping("stockmanager/bookcount/{name}")
     public Integer viewBookCount(@PathVariable("name") String name) throws BookException, StockManagerException {
         if (null == adminId) {
             throw new StockManagerException("Admin not logged");
@@ -127,7 +127,7 @@ public class StockManagerController {
         return this.stockManagerService.viewBooksCountByName(adminId,name);
     }
 
-    @PatchMapping("bookcount/update/{book}/{quantity}")
+    @PatchMapping("stockmanager/bookcount/update/{book}/{quantity}")
     public BookStock updateBookCount(@PathVariable("book") String bookName, @PathVariable("quantity") Integer quantity) throws BookException, StockManagerException {
         if (null == adminId) {
             throw new StockManagerException("Admin not logged");
@@ -138,7 +138,7 @@ public class StockManagerController {
         return this.stockManagerService.updateBookCountByName(adminId,bookName, quantity);
     }
 
-    @PostMapping("orderstatus/{orderid}/{orderstatus}")
+    @PostMapping("stockmanager/orderstatus/{orderid}/{orderstatus}")
     public BookOrders setOrderStatus(@PathVariable("orderid") Integer orderId, @PathVariable("orderstatus")OrderStatus orderStatus) throws StockManagerException, OrderException {
         if (null == adminId) {
             throw new StockManagerException("Admin not logged");

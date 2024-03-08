@@ -107,7 +107,7 @@ public class PaymentServiceImpl implements PaymentService {
             Integer amount=razorpayOrder.get("amount");
             if(transactionId != null)
             {
-                findSubscription.get().setSubscriptionStatus("Subscribed Successfully");
+                findSubscription.get().setSubscriptionStatus("ACTIVE");
             }
             else
             {

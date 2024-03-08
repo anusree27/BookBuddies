@@ -33,7 +33,7 @@ public class ReviewController {
 //        return reviewService.getCustomerReviews(customerId);
 //    }
 
-    @PostMapping("/reviewupdate")
+    @PutMapping("/review")
     public Book updateReview(@RequestBody Review review) throws CustomerException, ReviewException {
         return reviewService.updateReview(review);
     }

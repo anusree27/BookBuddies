@@ -29,7 +29,7 @@ public class PaymentController {
         return paymentService.makePayment(payment);
 //
     }
-    @GetMapping("/transaction/{subscriptionId}")
+    @GetMapping("/payment/subscribe/{subscriptionId}")
     public TransactionDetails createTransaction(@PathVariable("subscriptionId") Integer subscriptionId) throws PaymentException, SubscriptionException, RazorpayException {
         if(subscriptionId==null)
             throw new PaymentException("SubscriptionId Should not be null");
