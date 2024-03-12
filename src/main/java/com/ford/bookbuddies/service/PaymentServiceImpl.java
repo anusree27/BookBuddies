@@ -18,6 +18,7 @@ import java.util.Optional;
 @Service
 public class PaymentServiceImpl implements PaymentService {
     static ConfirmedBooksDto confirmedBooksDto;
+
     @Autowired
     private BookOrderRepository bookOrderRepository;
     @Autowired
@@ -40,11 +41,6 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     public Payment makePayment(Payment payment) throws Exception {
-        if(confirmedBooksDto.getOrderedBooks()==null)
-        {
-            throw new PaymentException("Books to Order list should not be null");
-        }
-
         double price=0.0;
         Integer totalQuantity=0;
         for(BookDetail books: confirmedBooksDto.getOrderedBooks())

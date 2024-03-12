@@ -1,9 +1,6 @@
 package com.ford.bookbuddies.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +10,8 @@ public class Cart {
     @Id
     @GeneratedValue
     private Integer id;
-    @OneToMany
+
+    @OneToMany(fetch = FetchType.EAGER)
     private List<BookDetail> bookDetails = new ArrayList<>();
 
 

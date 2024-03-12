@@ -25,8 +25,10 @@ public class PaymentController {
     {
         if(payment.getTotalCost()== null || payment.getAddress()==null||payment.getPaymentMode()==null)
              throw new PaymentException("Payment attributes should not be null");
-
-        return paymentService.makePayment(payment);
+        else if(payment.getTotalCost()<=0)
+            throw new PaymentException("Total cost should not be negative or 0");
+        else
+            return paymentService.makePayment(payment);
 //
     }
     @GetMapping("/payment/subscribe/{subscriptionId}")
@@ -34,10 +36,11 @@ public class PaymentController {
         if(subscriptionId==null)
             throw new PaymentException("SubscriptionId Should not be null");
 
-        if(!this.subscriptionRepository.existsById(subscriptionId))
+        else if(!this.subscriptionRepository.existsById(subscriptionId))
             throw new PaymentException("Subscription does not exist with Id:"+subscriptionId);
 
-
-        return this.paymentService.createTransaction(subscriptionId);
+        else
+            return this.paymentService.createTransaction(subscriptionId);
     }
+
 }

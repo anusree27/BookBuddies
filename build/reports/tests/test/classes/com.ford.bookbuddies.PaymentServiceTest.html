@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - PaymentServiceTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>PaymentServiceTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.ford.bookbuddies.html">com.ford.bookbuddies</a> &gt; PaymentServiceTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">1</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">1.495s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">denialOfTransactionShouldThrowExceptionTest()</td>
+<td class="success">1.495s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>19:54:04.410 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.ford.bookbuddies.PaymentServiceTest]: PaymentServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+19:54:04.457 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.ford.bookbuddies.BookBuddiesApplication for test class com.ford.bookbuddies.PaymentServiceTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.2)
+
+2024-03-11T19:54:04.587+05:30  WARN 17865 --- [    Test worker] ory$DuplicateJsonObjectContextCustomizer : 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/Users/st40/.gradle/caches/modules-2/files-2.1/org.json/json/20180130/26ba2ec0e791a32ea5dfbedfcebf36447ee5b12c/json-20180130.jar!/org/json/JSONObject.class
+	jar:file:/Users/st40/.gradle/caches/modules-2/files-2.1/com.vaadin.external.google/android-json/0.0.20131108.vaadin1/fa26d351fe62a6a17f5cda1287c1c6110dec413f/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+2024-03-11T19:54:04.592+05:30  INFO 17865 --- [    Test worker] c.ford.bookbuddies.PaymentServiceTest    : Starting PaymentServiceTest using Java 17.0.10 with PID 17865 (started by st40 in /Users/st40/Desktop/BookBuddies-Suba-Payment Testcases/BookBuddies)
+2024-03-11T19:54:04.593+05:30  INFO 17865 --- [    Test worker] c.ford.bookbuddies.PaymentServiceTest    : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2024-03-11T19:54:04.894+05:30  INFO 17865 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-03-11T19:54:04.934+05:30  INFO 17865 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 38 ms. Found 10 JPA repository interfaces.
+2024-03-11T19:54:05.104+05:30  INFO 17865 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-03-11T19:54:05.121+05:30  INFO 17865 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2024-03-11T19:54:05.132+05:30  INFO 17865 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-03-11T19:54:05.210+05:30  INFO 17865 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-03-11T19:54:05.220+05:30  INFO 17865 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-03-11T19:54:05.309+05:30  INFO 17865 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:file:/Users/st40/Desktop/BookBuddies-Suba-Payment Testcases user=SA
+2024-03-11T19:54:05.309+05:30  INFO 17865 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-03-11T19:54:05.319+05:30  WARN 17865 --- [    Test worker] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-03-11T19:54:05.742+05:30  INFO 17865 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: 
+    drop table if exists book cascade 
+Hibernate: 
+    drop table if exists book_review_list cascade 
+Hibernate: 
+    drop table if exists book_detail cascade 
+Hibernate: 
+    drop table if exists book_orders cascade 
+Hibernate: 
+    drop table if exists book_orders_book_list cascade 
+Hibernate: 
+    drop table if exists book_stock cascade 
+Hibernate: 
+    drop table if exists cart cascade 
+Hibernate: 
+    drop table if exists cart_book_details cascade 
+Hibernate: 
+    drop table if exists customer cascade 
+Hibernate: 
+    drop table if exists customer_order_list cascade 
+Hibernate: 
+    drop table if exists payment cascade 
+Hibernate: 
+    drop table if exists review cascade 
+Hibernate: 
+    drop table if exists stock_manager cascade 
+Hibernate: 
+    drop table if exists subscription cascade 
+Hibernate: 
+    drop sequence if exists book_detail_seq
+Hibernate: 
+    drop sequence if exists book_orders_seq
+Hibernate: 
+    drop sequence if exists book_seq
+Hibernate: 
+    drop sequence if exists book_stock_seq
+Hibernate: 
+    drop sequence if exists cart_seq
+Hibernate: 
+    drop sequence if exists customer_seq
+Hibernate: 
+    drop sequence if exists payment_seq
+Hibernate: 
+    drop sequence if exists review_seq
+Hibernate: 
+    drop sequence if exists stock_manager_seq
+Hibernate: 
+    drop sequence if exists subscription_seq
+Hibernate: 
+    create sequence book_detail_seq start with 1 increment by 50
+Hibernate: 
+    create sequence book_orders_seq start with 1 increment by 50
+Hibernate: 
+    create sequence book_seq start with 1 increment by 50
+Hibernate: 
+    create sequence book_stock_seq start with 1 increment by 50
+Hibernate: 
+    create sequence cart_seq start with 1 increment by 50
+Hibernate: 
+    create sequence customer_seq start with 1 increment by 50
+Hibernate: 
+    create sequence payment_seq start with 1 increment by 50
+Hibernate: 
+    create sequence review_seq start with 1 increment by 50
+Hibernate: 
+    create sequence stock_manager_seq start with 1 increment by 50
+Hibernate: 
+    create sequence subscription_seq start with 1 increment by 50
+Hibernate: 
+    create table book (
+        book_id integer not null,
+        price float(53),
+        book_author varchar(255),
+        book_category varchar(255) check (book_category in ('FICTION','HORROR','SCIFI','CHILDREN','FANTASY','BIOGRAPHY','COMICS')),
+        book_title varchar(255),
+        primary key (book_id)
+    )
+Hibernate: 
+    create table book_review_list (
+        book_book_id integer not null,
+        review_list_review_id integer not null unique
+    )
+Hibernate: 
+    create table book_detail (
+        book_book_id integer,
+        id integer not null,
+        quantity integer,
+        primary key (id)
+    )
+Hibernate: 
+    create table book_orders (
+        order_id integer not null,
+        order_status tinyint check (order_status between 0 and 3),
+        payment_payment_id integer unique,
+        total_book_count integer,
+        primary key (order_id)
+    )
+Hibernate: 
+    create table book_orders_book_list (
+        book_list_id integer not null unique,
+        book_orders_order_id integer not null
+    )
+Hibernate: 
+    create table book_stock (
+        book_book_id integer unique,
+        book_stock_id integer not null,
+        stock_quantity integer,
+        primary key (book_stock_id)
+    )
+Hibernate: 
+    create table cart (
+        id integer not null,
+        primary key (id)
+    )
+Hibernate: 
+    create table cart_book_details (
+        book_details_id integer not null unique,
+        cart_id integer not null
+    )
+Hibernate: 
+    create table customer (
+        cart_id integer unique,
+        id integer not null,
+        email varchar(255),
+        name varchar(255),
+        password varchar(255),
+        user_name varchar(255),
+        primary key (id)
+    )
+Hibernate: 
+    create table customer_order_list (
+        customer_id integer not null,
+        order_list_order_id integer not null unique
+    )
+Hibernate: 
+    create table payment (
+        payment_id integer not null,
+        payment_status boolean,
+        total_cost float(53),
+        address varchar(255),
+        payment_mode varchar(255) check (payment_mode in ('CREDIT_CARD','DEBIT_CARD','UPI','CASH_ON_DELIVERY','INTERNET_BANKING')),
+        primary key (payment_id)
+    )
+Hibernate: 
+    create table review (
+        book_id integer,
+        review_id integer not null,
+        review varchar(255),
+        user_email varchar(255),
+        primary key (review_id)
+    )
+Hibernate: 
+    create table stock_manager (
+        admin_id integer not null,
+        name varchar(255),
+        password varchar(255),
+        primary key (admin_id)
+    )
+Hibernate: 
+    create table subscription (
+        book_book_id integer,
+        customer_id integer,
+        expire_date date,
+        payment_plan tinyint check (payment_plan between 0 and 2),
+        subscription_cost float(53),
+        subscription_date date,
+        subscription_id integer not null,
+        subscription_status varchar(255),
+        primary key (subscription_id)
+    )
+Hibernate: 
+    alter table if exists book_review_list 
+       add constraint FKownpogc09o61cs11ls040s0t8 
+       foreign key (review_list_review_id) 
+       references review
+Hibernate: 
+    alter table if exists book_review_list 
+       add constraint FK1ot5gilnxedi223v8546ct0fa 
+       foreign key (book_book_id) 
+       references book
+Hibernate: 
+    alter table if exists book_detail 
+       add constraint FK6n4o6m7kminh8hnrhg3rpq9kg 
+       foreign key (book_book_id) 
+       references book
+Hibernate: 
+    alter table if exists book_orders 
+       add constraint FKjje5hj1hnpldxx3chcdofasf8 
+       foreign key (payment_payment_id) 
+       references payment
+Hibernate: 
+    alter table if exists book_orders_book_list 
+       add constraint FKskxs1skbin7mt4h4dwm8mnyqu 
+       foreign key (book_list_id) 
+       references book_detail
+Hibernate: 
+    alter table if exists book_orders_book_list 
+       add constraint FK94ix8wkfbof6lbk73m7s9l5kq 
+       foreign key (book_orders_order_id) 
+       references book_orders
+Hibernate: 
+    alter table if exists book_stock 
+       add constraint FKj6yh1kj6q0rususp3hrswk940 
+       foreign key (book_book_id) 
+       references book
+Hibernate: 
+    alter table if exists cart_book_details 
+       add constraint FK73xl2mqy3ucgbivxmqs7h1dti 
+       foreign key (book_details_id) 
+       references book_detail
+Hibernate: 
+    alter table if exists cart_book_details 
+       add constraint FKrcyr2fw4p3ij7qyjgmoxyull 
+       foreign key (cart_id) 
+       references cart
+Hibernate: 
+    alter table if exists customer 
+       add constraint FKam4cgy6fxmjm52m8otoph84m3 
+       foreign key (cart_id) 
+       references cart
+Hibernate: 
+    alter table if exists customer_order_list 
+       add constraint FK9sn4gp0j3j458hlynt6g78ho 
+       foreign key (order_list_order_id) 
+       references book_orders
+Hibernate: 
+    alter table if exists customer_order_list 
+       add constraint FK2o54sbdqerxidaooyhfiu3nuo 
+       foreign key (customer_id) 
+       references customer
+Hibernate: 
+    alter table if exists subscription 
+       add constraint FKmwda7jv0kyjvq53d04nwbw8ht 
+       foreign key (book_book_id) 
+       references book
+Hibernate: 
+    alter table if exists subscription 
+       add constraint FKg04cmtkq431k68csu8emybpcc 
+       foreign key (customer_id) 
+       references customer
+2024-03-11T19:54:05.779+05:30  INFO 17865 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-03-11T19:54:06.141+05:30  WARN 17865 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-03-11T19:54:06.297+05:30  INFO 17865 --- [    Test worker] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:/Users/st40/Desktop/BookBuddies-Suba-Payment Testcases'
+2024-03-11T19:54:06.325+05:30  INFO 17865 --- [    Test worker] c.ford.bookbuddies.PaymentServiceTest    : Started PaymentServiceTest in 1.812 seconds (process running for 2.26)
+Hibernate: 
+    select
+        next value for book_seq
+Hibernate: 
+    insert 
+    into
+        book
+        (book_author, book_category, book_title, price, book_id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        next value for customer_seq
+Hibernate: 
+    insert 
+    into
+        customer
+        (cart_id, email, name, password, user_name, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        c1_0.id,
+        c1_0.cart_id,
+        c1_0.email,
+        c1_0.name,
+        c1_0.password,
+        c1_0.user_name 
+    from
+        customer c1_0 
+    where
+        c1_0.user_name=?
+Hibernate: 
+    select
+        b1_0.book_id,
+        b1_0.book_author,
+        b1_0.book_category,
+        b1_0.book_title,
+        b1_0.price 
+    from
+        book b1_0 
+    where
+        b1_0.book_title=?
+Hibernate: 
+    select
+        next value for subscription_seq
+Hibernate: 
+    insert 
+    into
+        subscription
+        (book_book_id, customer_id, expire_date, payment_plan, subscription_cost, subscription_date, subscription_status, subscription_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        s1_0.subscription_id,
+        b1_0.book_id,
+        b1_0.book_author,
+        b1_0.book_category,
+        b1_0.book_title,
+        b1_0.price,
+        c1_0.id,
+        c2_0.id,
+        bd1_0.cart_id,
+        bd1_1.id,
+        b2_0.book_id,
+        b2_0.book_author,
+        b2_0.book_category,
+        b2_0.book_title,
+        b2_0.price,
+        bd1_1.quantity,
+        c1_0.email,
+        c1_0.name,
+        c1_0.password,
+        c1_0.user_name,
+        s1_0.expire_date,
+        s1_0.payment_plan,
+        s1_0.subscription_cost,
+        s1_0.subscription_date,
+        s1_0.subscription_status 
+    from
+        subscription s1_0 
+    left join
+        book b1_0 
+            on b1_0.book_id=s1_0.book_book_id 
+    left join
+        customer c1_0 
+            on c1_0.id=s1_0.customer_id 
+    left join
+        cart c2_0 
+            on c2_0.id=c1_0.cart_id 
+    left join
+        cart_book_details bd1_0 
+            on c2_0.id=bd1_0.cart_id 
+    left join
+        book_detail bd1_1 
+            on bd1_1.id=bd1_0.book_details_id 
+    left join
+        book b2_0 
+            on b2_0.book_id=bd1_1.book_book_id 
+    where
+        s1_0.subscription_id=?
+Hibernate: 
+    select
+        s1_0.subscription_id,
+        b1_0.book_id,
+        b1_0.book_author,
+        b1_0.book_category,
+        b1_0.book_title,
+        b1_0.price,
+        c1_0.id,
+        c2_0.id,
+        bd1_0.cart_id,
+        bd1_1.id,
+        b2_0.book_id,
+        b2_0.book_author,
+        b2_0.book_category,
+        b2_0.book_title,
+        b2_0.price,
+        bd1_1.quantity,
+        c1_0.email,
+        c1_0.name,
+        c1_0.password,
+        c1_0.user_name,
+        s1_0.expire_date,
+        s1_0.payment_plan,
+        s1_0.subscription_cost,
+        s1_0.subscription_date,
+        s1_0.subscription_status 
+    from
+        subscription s1_0 
+    left join
+        book b1_0 
+            on b1_0.book_id=s1_0.book_book_id 
+    left join
+        customer c1_0 
+            on c1_0.id=s1_0.customer_id 
+    left join
+        cart c2_0 
+            on c2_0.id=c1_0.cart_id 
+    left join
+        cart_book_details bd1_0 
+            on c2_0.id=bd1_0.cart_id 
+    left join
+        book_detail bd1_1 
+            on bd1_1.id=bd1_0.book_details_id 
+    left join
+        book b2_0 
+            on b2_0.book_id=bd1_1.book_book_id 
+    where
+        s1_0.subscription_id=?
+Hibernate: 
+    update
+        subscription 
+    set
+        book_book_id=?,
+        customer_id=?,
+        expire_date=?,
+        payment_plan=?,
+        subscription_cost=?,
+        subscription_date=?,
+        subscription_status=? 
+    where
+        subscription_id=?
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 8.5</a> at 11 Mar 2024, 19:54:08</p>
+</div>
+</div>
+</body>
+</html>

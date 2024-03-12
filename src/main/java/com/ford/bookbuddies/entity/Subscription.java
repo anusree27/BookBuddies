@@ -35,6 +35,7 @@ public class Subscription {
 
 
 
+
     public Integer getSubscriptionId() {
         return subscriptionId;
     }
