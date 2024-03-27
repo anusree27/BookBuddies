@@ -2,14 +2,14 @@ package com.ford.bookbuddies.dto;
 
 public class CustomerCartDto {
     private Integer userId;
-    private String bookName;
+    private Integer bookId;
     private Integer quantity;
 
     public CustomerCartDto() {
     }
 
-    public CustomerCartDto(Integer userId,String bookName, Integer quantity) {
-        this.bookName = bookName;
+    public CustomerCartDto(Integer userId,Integer bookId, Integer quantity) {
+        this.bookId = bookId;
         this.quantity = quantity;
         this.userId=userId;
     }
@@ -22,12 +22,12 @@ public class CustomerCartDto {
         this.userId = userId;
     }
 
-    public String getBookName() {
-        return bookName;
+    public Integer getBookId() {
+        return bookId;
     }
 
-    public void setBookName(String bookName) {
-        this.bookName = bookName;
+    public void setBookId(Integer bookId) {
+        this.bookId = bookId;
     }
 
     public Integer getQuantity() {

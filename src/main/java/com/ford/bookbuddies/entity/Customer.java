@@ -9,19 +9,14 @@ import java.util.List;
 @Entity
 public class Customer {
 
-    public Customer(Integer id, String name, String userName, String email, String password) {
-        this.id = id;
-        this.name = name;
-        this.userName = userName;
-        this.email = email;
-        this.password = password;
-    }
 
     @Id
     @GeneratedValue
     private Integer id;
     private String name;
     private String userName;
+
+    private Long phoneNumber;
     private String email;
     private String password;
 
@@ -42,6 +37,14 @@ public class Customer {
        this.cart = cart;
     }
 
+    public Customer(Integer id, String name, String userName, String email, String password) {
+        this.id = id;
+        this.name = name;
+        this.userName = userName;
+        this.email = email;
+        this.password = password;
+    }
+
     public Customer(Integer id, String name, String email, String password, String userName, Cart cart) {
         this.id = id;
         this.name = name;
@@ -59,6 +62,16 @@ public class Customer {
         this.name = name;
         this.email = email;
         this.password = password;
+    }
+
+    public Customer(String name, String userName, Long phoneNumber, String email, String password, List<BookOrders> orderList, Cart cart) {
+        this.name = name;
+        this.userName = userName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.password = password;
+        this.orderList = orderList;
+        this.cart = cart;
     }
 
 
@@ -129,5 +142,12 @@ public class Customer {
         this.userName = userName;
     }
 
+    public Long getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(Long phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 }
 

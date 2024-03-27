@@ -1,9 +1,6 @@
 package com.ford.bookbuddies.service;
 
-import com.ford.bookbuddies.entity.Book;
-import com.ford.bookbuddies.entity.BookCategory;
-import com.ford.bookbuddies.entity.Cart;
-import com.ford.bookbuddies.entity.Customer;
+import com.ford.bookbuddies.entity.*;
 import com.ford.bookbuddies.exception.CustomerException;
 
 import java.util.List;
@@ -15,5 +12,10 @@ public interface CustomerService {
     Cart getCart(Integer id) throws CustomerException;
     Customer login(String email, String password)throws CustomerException;
     List<Book> getBooksByCategory(BookCategory category);
+    List<Book> displayAllBooks();
+    List<BookOrders> getMyOrders(Integer userId)throws CustomerException;
 
+     Customer getUserById(Integer userId) throws CustomerException;
+
+     Customer editCustomerAccount(Customer editCustomer) throws CustomerException;
 }

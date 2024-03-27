@@ -2,7 +2,7 @@ package com.ford.bookbuddies.dto;
 public class TransactionDetails {
     private String  transactionId;
     private String currency;
-    private Double amount;
+    private Integer amount;
     private String key;
 
     public String getTransactionId() {
@@ -21,11 +21,11 @@ public class TransactionDetails {
         this.currency = currency;
     }
 
-    public Double getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(Integer amount) {
         this.amount = amount;
     }
 
@@ -37,7 +37,7 @@ public class TransactionDetails {
         this.key = key;
     }
 
-    public TransactionDetails(String transactionId, String currency, Double amount, String key) {
+    public TransactionDetails(String transactionId, String currency, Integer amount, String key) {
         this.transactionId = transactionId;
         this.currency = currency;
         this.amount = amount;

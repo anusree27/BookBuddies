@@ -33,9 +33,12 @@ public class DeleteServiceImpl implements DeleteService{
         if(bookOptional.isEmpty()) throw new BookException("Book doesn't exists");
         Customer customer = customerOptional.get();
         Book book = bookOptional.get();
-        Optional<BookDetail> bookDetailOptional=this.bookDetailRepository.findByBook(book);
-        customer.getCart().getBooksDetails().remove(bookDetailOptional.get());
-        this.cartRepository.save(customer.getCart());
+        try {
+            BookDetail bookDetail = customer.getCart().getBooksDetails().stream().filter((bd) -> bd.getBook().equals(book)).findAny().get();
+            customer.getCart().getBooksDetails().remove(bookDetail);
+            this.cartRepository.save(customer.getCart());
+        }
+        catch(Exception e){}
         return customer.getCart();
     }
 }

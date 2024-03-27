@@ -5,7 +5,6 @@ import com.ford.bookbuddies.dao.BookRepository;
 import com.ford.bookbuddies.dao.CustomerRepository;
 import com.ford.bookbuddies.dao.ReviewRepository;
 import com.ford.bookbuddies.entity.*;
-import com.ford.bookbuddies.exception.BookException;
 import com.ford.bookbuddies.exception.CustomerException;
 import com.ford.bookbuddies.exception.ReviewException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
@@ -35,7 +35,7 @@ public class ReviewServiceImpl implements ReviewService {
             throw new ReviewException("Review cannot be null");
         }
 
-        Optional<Customer> customerOptional = this.customerRepository.findByEmail(review.getUserEmail());
+        Optional<Customer> customerOptional = this.customerRepository.findById(review.getUserId());
         if (customerOptional.isEmpty()) {
             throw  new CustomerException("User not registered to add review");
         }
@@ -43,7 +43,7 @@ public class ReviewServiceImpl implements ReviewService {
         Optional<Book> book = this.bookRepository.findById(review.getBookId());
         Customer customer = customerOptional.get();
         for (BookOrders bl : customer.getOrderList()) {
-            for (BookDetail bookDetail : bl.getBookList()) {
+            for (BookDetail bookDetail : bl.getConfirmedOrders().getOrderedBooks()) {
                 if(bookDetail.getBook().getBookId() == review.getBookId()) {
                     result = true;
                     book.get().getReviewList().add(review);
@@ -64,57 +64,45 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<Review> getBookReviews(Integer bookId) throws BookException {
-        Optional<Book> bookOptional = this.bookRepository.findById(bookId);
-        if (bookOptional.isEmpty()) {
-            throw new BookException("Book not found");
-        }
-        Book book = bookOptional.get();
-        return book.getReviewList();
+    public Review getBookReviewById(Integer reviewId) throws ReviewException {
+        Optional<Review> reviewOptional = this.reviewRepository.findById(reviewId);
+       if (reviewOptional.isEmpty()) {
+           throw new ReviewException("Review not present");
+       }
+
+        return reviewOptional.get();
     }
 
     @Override
-    public Book updateReview(Review review) throws ReviewException, CustomerException {
+    public Book updateReview(Review review) throws ReviewException {
         if (review == null) {
             throw new ReviewException("Review cannot be null");
         }
-
-        Optional<Customer> customerOptional = this.customerRepository.findByEmail(review.getUserEmail());
-        if (customerOptional.isEmpty()) {
-            throw  new CustomerException("User not registered to add review");
+        Optional<Review> reviewOptional = this.reviewRepository.findById(review.getReviewId());
+        if (reviewOptional.isEmpty()) {
+            throw new ReviewException("Review is not present to update");
         }
-        Boolean result = false;
         Optional<Book> book = this.bookRepository.findById(review.getBookId());
-        Customer customer = customerOptional.get();
-        for (BookOrders bl : customer.getOrderList()) {
-            for (BookDetail bookDetail : bl.getBookList()) {
-                if(bookDetail.getBook().getBookId() == review.getBookId()) {
-                    result = true;
-                    book.get().getReviewList().add(review);
-                    reviewRepository.save(review);
-                    bookRepository.save(book.get());
-                    break;
-                }
-
-            }
-            if(result == true) {
-                break;
-            }
-        }
-        if (result == false) {
-            throw new ReviewException("User did not purchase the book to review");
-        }
+        reviewRepository.save(review);
+        bookRepository.save(book.get());
         return book.get();
     }
 
 //    @Override
 //    public List<Review> getCustomerReviews(Integer customerId) {
-//        return ReviewRepository.findByCustomerId(customerId);
+//        return this.reviewRepository.
 //    }
 
     @Override
-    public void deleteReview(Integer reviewId) {
+    public List<Review> deleteReview(Integer reviewId) {
+        Optional<Review> reviewOptional = this.reviewRepository.findById(reviewId);
+        Optional<Book> bookOptional=this.bookRepository.findById(reviewOptional.get().getBookId());
+        List<Review> reviewsList=bookOptional.get().getReviewList().stream().filter((r)->!r.getReviewId().equals(reviewId)).collect(Collectors.toList());
+        bookOptional.get().setReviewList(reviewsList);
+        this.bookRepository.save(bookOptional.get());
         this.reviewRepository.deleteById(reviewId);
+        return reviewsList;
     }
+
 }
 

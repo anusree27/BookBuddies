@@ -11,16 +11,26 @@ public class Review {
     private Integer reviewId;
     private String review;
     private Integer bookId;
-    private String userEmail;
+    private String userName;
+
+    private Integer userId;
 
     public Review() {
     }
 
-    public Review( String review, Integer bookId, String userEmail) {
+    public Review( String review, Integer bookId) {
 
         this.review = review;
         this.bookId = bookId;
-        this.userEmail = userEmail;
+
+    }
+
+    public Review(Integer reviewId, String review, Integer bookId, String userName, Integer userId) {
+        this.reviewId = reviewId;
+        this.review = review;
+        this.bookId = bookId;
+        this.userName = userName;
+        this.userId = userId;
     }
 
     public Integer getReviewId() {
@@ -47,12 +57,20 @@ public class Review {
         this.bookId = bookId;
     }
 
-    public String getUserEmail() {
-        return userEmail;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
 

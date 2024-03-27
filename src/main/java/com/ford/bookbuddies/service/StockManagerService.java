@@ -1,9 +1,10 @@
 package com.ford.bookbuddies.service;
 
-import com.ford.bookbuddies.entity.*;
+import com.ford.bookbuddies.entity.BookOrders;
+import com.ford.bookbuddies.entity.BookStock;
+import com.ford.bookbuddies.entity.Customer;
+import com.ford.bookbuddies.entity.StockManager;
 import com.ford.bookbuddies.exception.BookException;
-import com.ford.bookbuddies.exception.OrderException;
-import com.ford.bookbuddies.exception.PaymentException;
 import com.ford.bookbuddies.exception.StockManagerException;
 
 import java.util.List;
@@ -27,15 +28,14 @@ public interface StockManagerService {
 
     BookStock updateBook(Integer adminId,BookStock updateBook) throws BookException, StockManagerException;
 
-    Boolean deleteBookByBookName(Integer adminId,String bookName) throws BookException, StockManagerException;
+    BookStock getBookById(Integer adminId,Integer bookId) throws BookException, StockManagerException;
+    List<BookOrders> updateOrderStatus();
+
+    Boolean deleteBookByBookId(Integer adminId,Integer bookId) throws BookException, StockManagerException;
 
     List<BookStock> displayAllBooks(Integer adminId) throws StockManagerException;
 
     List<Customer> displayAllCustomer(Integer adminId) throws StockManagerException;
 
-    Integer viewBooksCountByName(Integer adminId,String bookName) throws BookException, StockManagerException;
-
-    BookStock updateBookCountByName(Integer adminId,String bookName, Integer quantity) throws BookException, StockManagerException;
-
-    BookOrders updateOrderStatus(Integer orderId, OrderStatus orderStatus) throws OrderException;
+    public List<BookStock> viewLessStocks() throws BookException;
 }

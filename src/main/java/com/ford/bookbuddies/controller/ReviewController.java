@@ -1,9 +1,7 @@
 package com.ford.bookbuddies.controller;
 
-import com.ford.bookbuddies.dto.ReviewDto;
 import com.ford.bookbuddies.entity.Book;
 import com.ford.bookbuddies.entity.Review;
-import com.ford.bookbuddies.exception.BookException;
 import com.ford.bookbuddies.exception.CustomerException;
 import com.ford.bookbuddies.exception.ReviewException;
 import com.ford.bookbuddies.service.ReviewService;
@@ -11,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000"})
 @RestController
 public class ReviewController {
 
@@ -23,9 +21,9 @@ public class ReviewController {
         return reviewService.addReview(review);
     }
 
-    @GetMapping("/reviews/book/{bookId}")
-    public List<Review> getBookReviews(@PathVariable("bookId")Integer bookId) throws BookException {
-        return reviewService.getBookReviews(bookId);
+    @GetMapping("/review/{id}")
+    public Review getBookReviewsByReviewId(@PathVariable("id")Integer reviewId) throws ReviewException {
+        return reviewService.getBookReviewById(reviewId);
     }
 
 //    @GetMapping("/reviews/customer/{customerId}")
@@ -39,8 +37,8 @@ public class ReviewController {
     }
 
     @DeleteMapping("/review/{reviewId}")
-    public void deleteReview(@PathVariable("reviewId")Integer reviewId){
-        reviewService.deleteReview(reviewId);
+    public List<Review> deleteReview(@PathVariable("reviewId")Integer reviewId){
+        return reviewService.deleteReview(reviewId);
     }
 
 }

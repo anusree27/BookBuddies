@@ -18,5 +18,6 @@ public interface SubscriptionRepository extends JpaRepository<Subscription,Integ
     List<Subscription> findByBook(Optional<Book> book);
 
     List<Subscription> findByCustomerUserName(String username);
+    List<Subscription> findByCustomerId(Integer userId);
 }
 

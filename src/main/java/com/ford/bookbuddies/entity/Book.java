@@ -13,6 +13,9 @@ public class Book {
     private String bookTitle;
     private String bookAuthor;
     private Double price;
+
+    private String image;
+    private String pdfLink;
     @Enumerated(EnumType.STRING)
     private BookCategory bookCategory;
     @OneToMany
@@ -30,7 +33,14 @@ public class Book {
         this.bookCategory = bookCategory;
     }
 
-
+    public Book(String bookTitle, String bookAuthor, Double price, String image, BookCategory bookCategory, List<Review> reviewList) {
+        this.bookTitle = bookTitle;
+        this.bookAuthor = bookAuthor;
+        this.price = price;
+        this.image = image;
+        this.bookCategory = bookCategory;
+        this.reviewList = reviewList;
+    }
 
 
     //getters and setters
@@ -81,5 +91,21 @@ public class Book {
 
     public void setReviewList(List<Review> reviewList) {
         this.reviewList = reviewList;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getPdfLink() {
+        return pdfLink;
+    }
+
+    public void setPdfLink(String pdfLink) {
+        this.pdfLink = pdfLink;
     }
 }

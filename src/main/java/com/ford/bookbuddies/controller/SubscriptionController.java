@@ -1,12 +1,18 @@
 package com.ford.bookbuddies.controller;
+
+import com.ford.bookbuddies.dto.SubscriptionDto;
+import com.ford.bookbuddies.dto.UpdateSubscriptionDto;
 import com.ford.bookbuddies.entity.Subscription;
-import com.ford.bookbuddies.entity.SubscriptionPlan;
 import com.ford.bookbuddies.exception.SubscriptionException;
 import com.ford.bookbuddies.service.SubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000"})
 @RestController
 public class SubscriptionController {
 
@@ -17,25 +23,27 @@ public class SubscriptionController {
     }
 
     @PostMapping("subscription/subscribe")
-    public Subscription subscribeToBook(@RequestParam String bookName, @RequestParam String userName, @RequestParam SubscriptionPlan plan) throws SubscriptionException{
-        return this.subscriptionService.subscribeToBook(bookName,userName,plan);
+    public Subscription subscribeToBook(@RequestBody SubscriptionDto subscriptionDto) throws SubscriptionException{
+        return this.subscriptionService.subscribeToBook(subscriptionDto.getBookId(),subscriptionDto.getUserId(),subscriptionDto.getSubscriptionPlan());
     }
 
-    @GetMapping("subscription/user/{username}/subscriptions")
-    public List<Subscription> getSubscriptionsByUsername(@PathVariable String username) throws SubscriptionException
+    @GetMapping("subscription/subscriptions/user/{userId}")
+    public List<Subscription> getSubscriptionsByUserId(@PathVariable Integer userId) throws SubscriptionException
     {
-        return this.subscriptionService.findSubscriptionsByUsername(username);
+        return this.subscriptionService.findSubscriptionsByUserId(userId);
     }
-    @GetMapping("subscription/book/{bookName}/subscriptions")
+    @GetMapping("subscription/subscriptions/book/{bookName}")
     public List<Subscription> getSubscriptionsByBookName(@PathVariable String bookName) throws SubscriptionException
     {
         return this.subscriptionService.findSubscriptionsByBookName(bookName);
     }
-    @PostMapping("subscription/{subscriptionId}/extend")
-    public void extendSubscription(@PathVariable Integer subscriptionId,@RequestParam SubscriptionPlan plan) throws SubscriptionException
+    @PatchMapping("subscription/extend")
+    public void extendSubscription(@RequestBody UpdateSubscriptionDto updateSubscriptionDto) throws SubscriptionException
     {
-        this.subscriptionService.extendSubscription(subscriptionId,plan);
+        this.subscriptionService.extendSubscription(updateSubscriptionDto.getSubscriptionId(),updateSubscriptionDto.getSubscriptionPlan());
     }
+    @Scheduled(cron = "0 0 0 * * *")
+    @Transactional
     @PatchMapping("subscription/cancelExpired")
     public void cancelExpiredSubscriptions() throws SubscriptionException
     {
@@ -46,16 +54,11 @@ public class SubscriptionController {
     {
         return this.subscriptionService.getAllSubscriptions();
     }
-    @PatchMapping("subscription/cancelSubscription/{subscriptionId}")
-    public void cancelSubscription(@PathVariable Integer subscriptionId) throws SubscriptionException
-    {
-        this.subscriptionService.cancelSubscriptions(subscriptionId);
-    }
-    @PostMapping("subscription/{subscriptionId}/renew")
-    public void renewSubscription(@PathVariable Integer subscriptionId,@RequestParam SubscriptionPlan plan) throws SubscriptionException
-    {
-        this.subscriptionService.renewSubscription(subscriptionId,plan);
-    }
 
-
+    @PatchMapping("subscription/renew")
+    public void renewSubscription(@RequestBody UpdateSubscriptionDto updateSubscriptionDto) throws SubscriptionException
+    {
+        this.subscriptionService.renewSubscription(updateSubscriptionDto.getSubscriptionId(),updateSubscriptionDto.getSubscriptionPlan());
+    }
 }
+

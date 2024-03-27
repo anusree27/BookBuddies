@@ -1,7 +1,6 @@
 package com.ford.bookbuddies.service;
 
 import com.ford.bookbuddies.dao.*;
-import com.ford.bookbuddies.dto.ConfirmedBooksDto;
 import com.ford.bookbuddies.entity.*;
 import com.ford.bookbuddies.exception.BookException;
 import com.ford.bookbuddies.exception.CartException;
@@ -32,11 +31,14 @@ public class CartServiceImpl implements CartService {
     private CartRepository cartRepository;
     @Autowired
     private PaymentService paymentService;
-
+    @Autowired
+    private ConfirmedOrdersRepository confirmedOrdersRepository;
 
     @Override
     public List<BookDetail> buyBooksinCart(Integer userId,List<Integer> list) throws Exception {
-        List<BookDetail> orderedBooks = new ArrayList<>();
+     List<BookDetail> orderedBooks = new ArrayList<>();
+
+
         Optional<Cart> userCart = Optional.ofNullable(customerService.getCart(userId));
         if(userCart.isEmpty()) throw new CartException("Customer Cart is Null!");
         for (BookDetail bd : userCart.get().getBooksDetails()) {
@@ -46,8 +48,9 @@ public class CartServiceImpl implements CartService {
                 }
             }
         }
-        ConfirmedBooksDto confirmedBooksDto=new ConfirmedBooksDto(userId,orderedBooks);
-        paymentService.orderDetails(confirmedBooksDto);
+
+        ConfirmedOrders confirmedOrders = new ConfirmedOrders(userId,false, orderedBooks);
+        this.confirmedOrdersRepository.save(confirmedOrders);
         return orderedBooks;
     }
     @Override

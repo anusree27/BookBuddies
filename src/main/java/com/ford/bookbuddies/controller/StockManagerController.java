@@ -1,16 +1,17 @@
 package com.ford.bookbuddies.controller;
 
-import com.ford.bookbuddies.entity.*;
+import com.ford.bookbuddies.entity.BookOrders;
+import com.ford.bookbuddies.entity.BookStock;
+import com.ford.bookbuddies.entity.Customer;
+import com.ford.bookbuddies.entity.StockManager;
 import com.ford.bookbuddies.exception.BookException;
-import com.ford.bookbuddies.exception.OrderException;
-import com.ford.bookbuddies.exception.PaymentException;
 import com.ford.bookbuddies.exception.StockManagerException;
 import com.ford.bookbuddies.service.StockManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000"})
 @RestController
 public class StockManagerController {
 
@@ -21,22 +22,22 @@ public class StockManagerController {
 
     @PostMapping("stockmanager/signup")
     public StockManager addStockManager(@RequestBody StockManager stockManager) throws StockManagerException {
-        if (null == stockManager.getName() ) {
+        if (stockManager.getName() == null) {
             throw new StockManagerException("Admin Name should not be null");
         }
-        if (null == stockManager.getPassword()) {
-            throw new StockManagerException("Admin Password should not be empty");
+        if (stockManager.getPassword() == null) {
+            throw new StockManagerException("Password should not be null");
         }
         return this.stockManagerService.signUp(stockManager);
     }
 
     @PostMapping("stockmanager/login")
     public StockManager login(@RequestBody StockManager stockManager) throws StockManagerException {
-        if (null == stockManager.getName()) {
+        if (stockManager.getName() == null) {
             throw new StockManagerException("Admin Name should not be null");
         }
-        if (null == stockManager.getPassword()) {
-            throw new StockManagerException("Admin Password should not be empty");
+        if (stockManager.getPassword() == null) {
+            throw new StockManagerException("Password should not be null");
         }
         StockManager manager = null;
         manager = this.stockManagerService.login(stockManager.getName(), stockManager.getPassword());
@@ -52,60 +53,62 @@ public class StockManagerController {
     }
 
 
-    @PostMapping("stockmanager/Book")
-    public BookStock addNewBooks(@RequestBody BookStock newBook) throws BookException, StockManagerException {
-        if (null == adminId ) {
+    @PostMapping("stockmanager/book")
+    public BookStock addNewBooks(@RequestBody BookStock bookStock) throws BookException, StockManagerException {
+        if (adminId == null) {
             throw new StockManagerException("Admin not logged");
         }
-        if (null == newBook) {
+        if (bookStock == null) {
             throw new BookException("book should not be null");
         }
-        if (null == newBook.getBook().getBookTitle()) {
-            throw new BookException("book Title should not be null");
+        if (bookStock.getBook().getBookTitle() == null) {
+            throw new BookException("book should not be null");
         }
-        if (null == newBook.getBook().getBookAuthor()) {
+        if (bookStock.getBook().getBookAuthor() == null) {
             throw new BookException("book Author should not be null");
         }
-        if (null == newBook.getBook().getPrice()) {
+        if (bookStock.getBook().getPrice() == null) {
             throw new BookException("book Price should not be null");
         }
-        return this.stockManagerService.addNewBooks(adminId, newBook);
+        return this.stockManagerService.addNewBooks(adminId, bookStock);
     }
 
-    @PatchMapping("stockmanager/Book")
+    @PatchMapping("stockmanager/book")
     public BookStock updateBook(@RequestBody BookStock updateBook) throws BookException, StockManagerException {
-        if (null == adminId ) {
+        if (adminId == null) {
             throw new StockManagerException("Admin not logged");
         }
-        if (null == updateBook) {
-            throw new BookException("book should not be null");
-        }
-        if (null == updateBook.getBook().getBookTitle()) {
+        if (updateBook.getBook().getBookTitle() == null) {
             throw new BookException("book Title should not be null");
         }
-        if (null == updateBook.getBook().getBookAuthor()) {
+        if (updateBook.getBook().getBookAuthor() == null) {
             throw new BookException("book Author should not be null");
         }
-        if (null == updateBook.getBook().getPrice()) {
+        if (updateBook.getBook().getPrice()== null) {
             throw new BookException("book Price should not be null");
         }
         return this.stockManagerService.updateBook(adminId,updateBook);
     }
 
-    @DeleteMapping("stockmanager/book/{name}")
-    public Boolean deleteBook(@PathVariable("name") String bookName) throws BookException, StockManagerException {
-        if (null == adminId) {
-            throw new StockManagerException("Admin not logged");
+    @GetMapping("stockmanager/book/{id}")
+    public BookStock getBookById(@PathVariable("id") Integer bookId) throws BookException, StockManagerException {
+        if (bookId == null) {
+            throw new BookException("Id should not be null");
         }
-        if (null == bookName) {
-            throw new BookException("Book name should not be null");
+        return this.stockManagerService.getBookById(adminId, bookId);
+    }
+
+    @DeleteMapping("stockmanager/book/{id}")
+    public Boolean deleteBook(@PathVariable("id") Integer bookId) throws BookException, StockManagerException {
+        if (bookId == null) {
+            throw new BookException("Book id should not be null");
         }
-        return this.stockManagerService.deleteBookByBookName(adminId,bookName);
+        return this.stockManagerService.deleteBookByBookId(adminId,bookId);
     }
 
     @GetMapping("stockmanager/books")
     public List<BookStock> getAllBooks() throws StockManagerException {
-        if (null == adminId) {
+        if (adminId == null) {
             throw new StockManagerException("Admin not logged");
         }
         return this.stockManagerService.displayAllBooks(adminId);
@@ -113,42 +116,19 @@ public class StockManagerController {
 
     @GetMapping("stockmanager/users")
     public List<Customer> getAllCustomer() throws StockManagerException {
-        if (null == adminId) {
+        if (adminId == null) {
             throw new StockManagerException("Admin not logged");
         }
         return this.stockManagerService.displayAllCustomer(adminId);
     }
 
-    @GetMapping("stockmanager/bookcount/{name}")
-    public Integer viewBookCount(@PathVariable("name") String name) throws BookException, StockManagerException {
-        if (null == adminId) {
-            throw new StockManagerException("Admin not logged");
-        }
-        return this.stockManagerService.viewBooksCountByName(adminId,name);
+    @GetMapping("stockmanager/update-orders")
+    public List<BookOrders> updateOrderStatus(){
+        return this.stockManagerService.updateOrderStatus();
     }
 
-    @PatchMapping("stockmanager/bookcount/update/{book}/{quantity}")
-    public BookStock updateBookCount(@PathVariable("book") String bookName, @PathVariable("quantity") Integer quantity) throws BookException, StockManagerException {
-        if (null == adminId) {
-            throw new StockManagerException("Admin not logged");
-        }
-        if (null == bookName) {
-            throw new BookException("Book name should not be null");
-        }
-        return this.stockManagerService.updateBookCountByName(adminId,bookName, quantity);
-    }
-
-    @PostMapping("stockmanager/orderstatus/{orderid}/{orderstatus}")
-    public BookOrders setOrderStatus(@PathVariable("orderid") Integer orderId, @PathVariable("orderstatus")OrderStatus orderStatus) throws StockManagerException, OrderException {
-        if (null == adminId) {
-            throw new StockManagerException("Admin not logged");
-        }
-        if (null == orderId) {
-            throw new OrderException("Order id should not be null");
-        }
-        if (null == orderStatus) {
-            throw new OrderException("Order status should not be null");
-        }
-        return this.stockManagerService.updateOrderStatus(orderId, orderStatus);
+    @GetMapping("stockmanager/less-stocks")
+    public List<BookStock> displayLessStocks() throws BookException {
+        return this.stockManagerService.viewLessStocks();
     }
 }

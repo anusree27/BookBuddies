@@ -1,30 +1,42 @@
 package com.ford.bookbuddies.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 
 @Entity
 public class Payment {
     @Id
     @GeneratedValue
     private Integer paymentId;
+
+    private Integer userId;
     private Boolean paymentStatus;
     private Double totalCost;
 
+    private Long mobileNo;
     private String address;
 
-    @Enumerated(EnumType.STRING)
-    private PaymentMode paymentMode;
+
 
     public Payment() {
     }
 
-    public Payment( Double totalCost, String address, PaymentMode paymentMode) {
+    public Payment( Double totalCost, String address) {
 
         this.totalCost = totalCost;
         this.address = address;
-        this.paymentMode = paymentMode;
+
     }
 
+    public Payment(Integer userId, Boolean paymentStatus, Double totalCost, Long mobileNo, String address) {
+        this.userId = userId;
+        this.paymentStatus = paymentStatus;
+        this.totalCost = totalCost;
+        this.mobileNo = mobileNo;
+        this.address = address;
+
+    }
 
 
     public Integer getPaymentId() {
@@ -59,12 +71,22 @@ public class Payment {
         this.address = address;
     }
 
-    public PaymentMode getPaymentMode() {
-        return paymentMode;
+
+
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setPaymentMode(PaymentMode paymentMode) {
-        this.paymentMode = paymentMode;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Long getMobileNo() {
+        return mobileNo;
+    }
+
+    public void setMobileNo(Long mobileNo) {
+        this.mobileNo = mobileNo;
     }
     //address
 }

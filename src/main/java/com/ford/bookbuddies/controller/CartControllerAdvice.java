@@ -1,6 +1,5 @@
 package com.ford.bookbuddies.controller;
 
-import com.ford.bookbuddies.exception.BookException;
 import com.ford.bookbuddies.exception.CartException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -3,7 +3,6 @@ package com.ford.bookbuddies.controller;
 import com.ford.bookbuddies.dto.Bookdto;
 import com.ford.bookbuddies.dto.OrderBooksdto;
 import com.ford.bookbuddies.entity.BookDetail;
-import com.ford.bookbuddies.entity.Cart;
 import com.ford.bookbuddies.exception.BookException;
 import com.ford.bookbuddies.exception.CartException;
 import com.ford.bookbuddies.exception.CustomerException;
@@ -13,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000"})
 @RestController
 public class CartController {
 
@@ -31,25 +30,24 @@ public class CartController {
         return cartService.buyBooksinCart(orderBooksdto.getUserId(),orderBooksdto.getIdList());
     }
     @PatchMapping("cart/book/quantity/plus")
-    public Cart increasebookQuantity(@RequestBody Bookdto quantitydto)throws Exception {
+    public List<BookDetail> increasebookQuantity(@RequestBody Bookdto quantitydto)throws Exception {
         if(quantitydto==null) throw new CartException("BookDto is null");
         if(quantitydto.getUserId()==null) throw new CustomerException("User not logged in");
         if(quantitydto.getBookId()==null) throw new BookException("Book Id can't be null");
-        return this.cartService.increaseQuantity(quantitydto.getUserId(),quantitydto.getBookId());
+        return this.cartService.increaseQuantity(quantitydto.getUserId(),quantitydto.getBookId()).getBooksDetails();
     }
     @PatchMapping("cart/book/quantity/minus")
-    public Cart decreasebookQuantity(@RequestBody Bookdto quantitydto)throws Exception{
+    public List<BookDetail> decreasebookQuantity(@RequestBody Bookdto quantitydto)throws Exception{
         if(quantitydto==null) throw new CartException("BookDto is null");
         if(quantitydto.getUserId()==null) throw new CustomerException("User not logged in");
         if(quantitydto.getBookId()==null) throw new BookException("Book Id can't be null");
-        return this.cartService.decreaseQuantity(quantitydto.getUserId(),quantitydto.getBookId());
+        return this.cartService.decreaseQuantity(quantitydto.getUserId(),quantitydto.getBookId()).getBooksDetails();
     }
-    @DeleteMapping("cart")
-    public Cart deleteProductFromCart(@RequestBody Bookdto quantitydto)throws Exception{
-        if(quantitydto==null) throw new CartException("BookDto is null");
-        if(quantitydto.getUserId()==null) throw new CustomerException("User not logged in");
-        if(quantitydto.getBookId()==null) throw new BookException("Book Id can't be null");
-        return this.deleteService.deleteProductFromCart(quantitydto.getUserId(),quantitydto.getBookId());
+    @DeleteMapping("cart/{userId}/{bookId}")
+    public List<BookDetail> deleteProductFromCart(@PathVariable Integer userId,@PathVariable Integer bookId)throws Exception{
+        if(userId==null) throw new CustomerException("User not logged in");
+        if(bookId==null) throw new BookException("Book Id can't be null");
+        return this.deleteService.deleteProductFromCart(userId,bookId).getBooksDetails();
     }
 
 }

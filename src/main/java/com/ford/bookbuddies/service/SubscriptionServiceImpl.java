@@ -3,10 +3,14 @@ package com.ford.bookbuddies.service;
 import com.ford.bookbuddies.dao.BookRepository;
 import com.ford.bookbuddies.dao.CustomerRepository;
 import com.ford.bookbuddies.dao.SubscriptionRepository;
-import com.ford.bookbuddies.entity.*;
+import com.ford.bookbuddies.entity.Book;
+import com.ford.bookbuddies.entity.Customer;
+import com.ford.bookbuddies.entity.Subscription;
+import com.ford.bookbuddies.entity.SubscriptionPlan;
 import com.ford.bookbuddies.exception.SubscriptionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -27,18 +31,18 @@ public class SubscriptionServiceImpl implements SubscriptionService{
     }
 
     @Override
-    public Subscription subscribeToBook(String bookName, String userName, SubscriptionPlan plan) throws SubscriptionException
+    public Subscription subscribeToBook(Integer bookId,Integer userId, SubscriptionPlan plan) throws SubscriptionException
     {
-        if(bookName==null || bookName.isEmpty() || userName==null || userName.isEmpty() || plan==null)
+        if(bookId==null || userId==null || plan==null)
         {
             throw new SubscriptionException("Book name,username and plan cannot be null or empty");
         }
-        Optional<Customer> customerOpt=this.customerRepository.findByUserName(userName);
+        Optional<Customer> customerOpt=this.customerRepository.findById(userId);
         if(customerOpt.isEmpty())
         {
-            throw new SubscriptionException("The given user name is not valid");
+            throw new SubscriptionException("The given user ID is not valid");
         }
-        Optional<Book> bookOpt=this.bookRepository.findByBookTitle(bookName);
+        Optional<Book> bookOpt=this.bookRepository.findByBookId(bookId);
         if(bookOpt.isEmpty())
         {
             throw new SubscriptionException("The given book name is not found");
@@ -80,17 +84,17 @@ public class SubscriptionServiceImpl implements SubscriptionService{
 
 
     @Override
-    public List<Subscription> findSubscriptionsByUsername(String username) throws SubscriptionException {
-        if(username==null || username.isEmpty())
+    public List<Subscription> findSubscriptionsByUserId(Integer userId) throws SubscriptionException {
+        if(userId==null)
         {
-            throw new SubscriptionException("Username cannot be null or empty");
+            throw new SubscriptionException("Username cannot be null");
         }
-        Optional<Customer> customer=this.customerRepository.findByUserName(username);
+        Optional<Customer> customer=this.customerRepository.findById(userId);
         if(customer.isEmpty())
         {
-            throw new SubscriptionException("User "+ username +" not found");
+            throw new SubscriptionException("User "+ userId +" not found");
         }
-        return this.subscriptionRepository.findByCustomerUserName(username);
+        return this.subscriptionRepository.findByCustomerId(userId);
     }
 
     @Override
@@ -110,10 +114,14 @@ public class SubscriptionServiceImpl implements SubscriptionService{
             LocalDate currentDate=LocalDate.now();
             LocalDate expiryDate=subscription.getExpireDate();
             LocalDate extensionDate=expiryDate.minusDays(1);//going to get expired
-            if(currentDate.isBefore(extensionDate) || currentDate.isEqual(extensionDate) || currentDate.isEqual(expiryDate))
+            if(currentDate.isEqual(extensionDate) || currentDate.isEqual(expiryDate))
             {
                 LocalDate newExpireDate=expiryDate.plusDays(plan.getDuration());
+                subscription.setSubscriptionDate(LocalDate.now());
                 subscription.setExpireDate(newExpireDate);
+                subscription.setPaymentPlan(plan);
+                subscription.setSubscriptionCost(plan.getCost());
+                subscription.setSubscriptionStatus("PAYMENT PENDING");
                 this.subscriptionRepository.save(subscription);
                 return "Subscription extended successfully";
             } else {
@@ -130,23 +138,7 @@ public class SubscriptionServiceImpl implements SubscriptionService{
         return this.subscriptionRepository.findAllBy();
     }
 
-    @Override
-    public Double cancelSubscriptions(Integer subscriptionId) throws SubscriptionException{
-        if(subscriptionId==null || subscriptionId<=0)
-        {
-            throw new SubscriptionException("Invalid Subscription Id: "+subscriptionId);
-        }
-        Optional<Subscription> subscriptionOpt = this.subscriptionRepository.findById(subscriptionId);
-        if (subscriptionOpt.isEmpty()) {
-            throw new SubscriptionException(SUBSCRIPTION_NOTFOUND_MESSAGE + " " + subscriptionId);
 
-        }
-        Subscription subscription = subscriptionOpt.get();
-        Double refundAmount = calculateRefundAmount(subscription);
-        subscription.setSubscriptionStatus("CANCELLED");
-        this.subscriptionRepository.save(subscription);
-        return refundAmount;
-    }
 
     @Override
     public List<Subscription> findSubscriptionsByBookName(String bookName) throws SubscriptionException{
@@ -154,7 +146,7 @@ public class SubscriptionServiceImpl implements SubscriptionService{
         {
             throw new SubscriptionException("Book name cannot be null or empty");
         }
-        Optional<Book> book=this.bookRepository.findByBookTitle(bookName);
+        Optional<Book> book=this.bookRepository.findByBookTitleIgnoreCase(bookName);
         if(book.isEmpty())
         {
             throw new SubscriptionException("Book "+ bookName +" not found");
@@ -180,7 +172,10 @@ public class SubscriptionServiceImpl implements SubscriptionService{
             if (expiryDate.isBefore(currentDate))//already expired
             {
                 LocalDate newExpireDate = currentDate.plusDays(plan.getDuration());
+                subscription.setSubscriptionDate(LocalDate.now());
                 subscription.setExpireDate(newExpireDate);
+                subscription.setPaymentPlan(plan);
+                subscription.setSubscriptionCost(plan.getCost());
                 subscription.setSubscriptionStatus("PAYMENT PENDING");
                 this.subscriptionRepository.save(subscription);
                 return "Subscription renewed successfully";
@@ -195,27 +190,7 @@ public class SubscriptionServiceImpl implements SubscriptionService{
 
 
 
-    public Double calculateRefundAmount(Subscription subscription)  throws SubscriptionException{
-        LocalDate currentDate=LocalDate.now();
-        if(subscription.getSubscriptionCost()==null)
-        {
-            Double planCost=subscription.getPaymentPlan().getCost();
-            subscription.setSubscriptionCost(planCost);
-        }
-        if(currentDate.isBefore(subscription.getExpireDate().minusDays(subscription.getPaymentPlan().getDuration()/2)))
-        {
-            if(subscription.getSubscriptionCost()!=null) {
-                return subscription.getSubscriptionCost() / 2;
-            }
-            else{
-                throw new SubscriptionException("Subscription cost is null");
-            }
-        }
-        else {
-            return 0.0;
-        }
 
-    }
 
 
 
