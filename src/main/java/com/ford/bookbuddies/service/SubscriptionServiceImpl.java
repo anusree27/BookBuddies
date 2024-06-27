@@ -186,6 +186,7 @@ public class SubscriptionServiceImpl implements SubscriptionService{
         else {
             throw new SubscriptionException(SUBSCRIPTION_NOTFOUND_MESSAGE + " " + subscriptionId);
         }
+
     }
 
 
