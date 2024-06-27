@@ -28,13 +28,13 @@ public class BookController {
 
         return this.bookService.addProductToCart(customerCartDto.getUserId(), customerCartDto.getBookId(),customerCartDto.getQuantity());
     }
-    @PostMapping("book/buy")
-    public List<BookDetail> buyBook(@RequestBody CustomerCartDto customerCartDto)throws Exception{
-        if(null==customerCartDto) throw new CustomerException("CARTDTO IS NULL");
-        if(null==customerCartDto.getUserId()) throw new CustomerException("User not logged in to buy Book");
-        if(null==customerCartDto.getBookId()) throw new CartException("Book Id should not be null");
-        if (null==customerCartDto.getQuantity()) throw new CartException("Quantity should not be null");
-        if (customerCartDto.getQuantity()< 0) throw new CartException("Quantity should be greater than zero");
-        return this.bookService.buyBook(customerCartDto.getUserId(),customerCartDto.getBookId(),customerCartDto.getQuantity());
-    }
+//    @PostMapping("book/buy")
+//    public List<BookDetail> buyBook(@RequestBody CustomerCartDto customerCartDto)throws Exception{
+//        if(null==customerCartDto) throw new CustomerException("CARTDTO IS NULL");
+//        if(null==customerCartDto.getUserId()) throw new CustomerException("User not logged in to buy Book");
+//        if(null==customerCartDto.getBookId()) throw new CartException("Book Id should not be null");
+//        if (null==customerCartDto.getQuantity()) throw new CartException("Quantity should not be null");
+//        if (customerCartDto.getQuantity()< 0) throw new CartException("Quantity should be greater than zero");
+//        return this.bookService.buyBook(customerCartDto.getUserId(),customerCartDto.getBookId(),customerCartDto.getQuantity());
+//    }
 }
